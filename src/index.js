@@ -1,17 +1,44 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import {createStore, compose, applyMiddleware, combineReducers} from 'redux'
+import thunkMiddleware from 'redux-thunk'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import App from './App'
+import {BrowserRouter} from 'react-router-dom'
+import {Provider} from 'react-redux'
+import { grommet } from 'grommet/themes';
+import {Grommet} from 'grommet'
+
+const store = createStore(combineReducers({}), compose(applyMiddleware(thunkMiddleware)))
+
+const theme = {
+    ...grommet,
+    global: {
+        ...grommet.global,
+        colors: {
+            header: "#4FAEB4",
+            menu: "#3E3E3E",
+            back: "#E5E5E5",
+            action: "#09CF83",
+            create: "#11D600",
+            remove: "#F30000",
+            update: "#FFDA18",
+            focus: "#4FAEB4",
+            details: "#6F4BFF",
+            footer: "#333333",
+            white: "#ffffff"
+        },
+    },
+}
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+    <React.StrictMode>
+        <BrowserRouter>
+            <Provider store={store}>
+                <Grommet full theme={theme}>
+                    <App/>
+                </Grommet>
+            </Provider>
+        </BrowserRouter>
+    </React.StrictMode>,
   document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
