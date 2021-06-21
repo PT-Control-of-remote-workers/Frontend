@@ -25,7 +25,7 @@ const DropContent = ({onClose}) => (
         <AppBtn name={"Profile"} type={"dropMenu"} action={() => {
         }}/>
 
-        <NavLink to={'/sign_up'} style={{textDecoration: 'none'}}>
+        <NavLink to={'/sign_page'} style={{textDecoration: 'none'}}>
             <AppBtn name={"Sign out"} type={"dropMenu"} action={() => {
                 localStorage.removeItem("name")
             }}/>

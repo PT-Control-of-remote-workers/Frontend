@@ -1,18 +1,13 @@
-import {Box, Button, Form, FormField, Heading, TextInput} from "grommet";
+import {Box, Button, Form, FormField, Heading, Text, TextInput} from "grommet";
 import React from "react";
-import {styles} from "../util/AppBtn";
-import {NavLink} from "react-router-dom";
-import { useHistory } from "react-router-dom";
 
-export default function SingUpForm() {
-    const [value, setValue] = React.useState({});
-    const history = useHistory();
+export default function SingUpForm({onSubmit, setValue, value, errorMessage, setErrorMessage}) {
     return (
         <Box
             pad={"large"}
-            round={"medium"}
+            round={"large"}
             background={"white"}
-            gap={"large"}
+            gap={"small"}
             width={"medium"}
             height={"100%"}
         >
@@ -22,23 +17,22 @@ export default function SingUpForm() {
             <Form
                 value={value}
                 onChange={nextValue => {
-                    setValue(nextValue)}
+                        setValue(nextValue)
+                        setErrorMessage(undefined)
+                    }
                 }
-                onSubmit={({ value }) => {
-                    localStorage.setItem("name", value.name)
-                    history.push("/index");
-                }}
+                onSubmit={onSubmit}
             >
                 <Box
-                    gap={"medium"}
+                    gap={"small"}
                 >
                     <FormField
-                        label={'Name'}
-                        name={'name'}
+                        label={'Login'}
+                        name={'username'}
                         required={true}
                     >
                         <TextInput
-                            name={'name'}
+                            name={'username'}
                             width={'large'}
                         />
                     </FormField>
@@ -54,6 +48,26 @@ export default function SingUpForm() {
                         />
                     </FormField>
                     <FormField
+                        label={'First name'}
+                        name={'firstName'}
+                        required={true}
+                    >
+                        <TextInput
+                            name={'firstName'}
+                            width={'large'}
+                        />
+                    </FormField>
+                    <FormField
+                        label={'Last name'}
+                        name={'lastName'}
+                        required={true}
+                    >
+                        <TextInput
+                            name={'lastName'}
+                            width={'large'}
+                        />
+                    </FormField>
+                    <FormField
                         label={'* Password'}
                         name={'password'}
                         required={true}
@@ -64,6 +78,20 @@ export default function SingUpForm() {
                             width={'large'}
                         />
                     </FormField>
+                    {errorMessage !== undefined &&
+                    <Box
+                        align={'center'}
+                        margin={{vertical: 'small'}}
+                    >
+                        <Text
+                            color={'status-critical'}
+                            size={'large'}
+                            weight={'bold'}
+                        >
+                            {errorMessage}
+                        </Text>
+                    </Box>
+                    }
                     <Button
                         primary
                         type={"submit"}
