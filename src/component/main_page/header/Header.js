@@ -12,12 +12,10 @@ export default function Header() {
                 "right": "small"
             }}
             background={'header'}
+            justify={'between'}
+            direction={'row'}
+            align="center"
         >
-            <Box
-                justify={'between'}
-                direction={'row'}
-                align="center"
-            >
 
             <Text alignSelf={'center'}>
                 <NavLink
@@ -35,7 +33,6 @@ export default function Header() {
             </Text>
 
             <AccountMenuContainer/>
-            </Box>
 
         </Box>
     )

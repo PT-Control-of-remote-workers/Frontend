@@ -1,4 +1,4 @@
-import {Box, Heading, InfiniteScroll, Table, TableBody, TableCell, TableHeader, TableRow} from "grommet";
+import {Box, Grid, Heading, InfiniteScroll, Table, TableBody, TableCell, TableHeader, TableRow} from "grommet";
 import React, {useState} from "react";
 
 export default function PreviewTasks({allTasks}) {
@@ -35,38 +35,54 @@ export default function PreviewTasks({allTasks}) {
                 <Heading level={2}>
                     Preview tasks
                 </Heading>
-                    <Table>
-                        <TableHeader>
-                            <TableRow>
-                                <TableCell scope="col" border="bottom">
-                                    Name
-                                </TableCell>
-                                <TableCell scope="col" border="bottom">
-                                    Description
-                                </TableCell>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            <InfiniteScroll
-                                renderMarker={marker => (
-                                    <TableRow>
-                                        <TableCell>{marker}</TableCell>
-                                    </TableRow>
-                                )}
-                                scrollableAncestor="window"
-                                items={tasks}
-                                onMore={() => load()}
-                                step={step}
-                            >
-                                {task => (
-                                    <TableRow key={task.id}>
-                                        <TableCell>{task.name}</TableCell>
-                                        <TableCell>{task.description}</TableCell>
-                                    </TableRow>
-                                )}
-                            </InfiniteScroll>
-                        </TableBody>
-                    </Table>
+                <Box
+                    fill
+                    overflow={"scroll"}
+                >
+                    <Grid
+                        style={{
+                            wight: 'fill'
+                        }}
+                        rows={["flex"]}
+                        areas={[
+                            ['table'],
+                        ]}>
+                        <Table
+                            gridArea={"table"}
+                        >
+                            <TableHeader>
+                                <TableRow>
+                                    <TableCell scope="col" border="bottom">
+                                        Name
+                                    </TableCell>
+                                    <TableCell scope="col" border="bottom">
+                                        Description
+                                    </TableCell>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                <InfiniteScroll
+                                    renderMarker={marker => (
+                                        <TableRow>
+                                            <TableCell>{marker}</TableCell>
+                                        </TableRow>
+                                    )}
+                                    scrollableAncestor="window"
+                                    items={tasks}
+                                    onMore={() => load()}
+                                    step={step}
+                                >
+                                    {task => (
+                                        <TableRow key={task.id}>
+                                            <TableCell>{task.name}</TableCell>
+                                            <TableCell>{task.description}</TableCell>
+                                        </TableRow>
+                                    )}
+                                </InfiniteScroll>
+                            </TableBody>
+                        </Table>
+                    </Grid>
+                </Box>
             </Box>
         )
     } else {

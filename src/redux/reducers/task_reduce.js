@@ -10,11 +10,11 @@ import {
     completeTask, setWorker
 } from "../../api/task_api";
 
-const SET_TASKS = 'SET_TASKS'
-const REMOVE_TASK = 'REMOVE_TASK'
-const UPDATE_TASK = 'UPDATE_TASK'
-const ADD_TASK = 'ADD_TASK'
-const ADD_TASKS = 'ADD_TASKS'
+const SET_TASKS = 'TASK_SET'
+const REMOVE_TASK = 'TASK_REMOVE'
+const UPDATE_TASK = 'TASK_UPDATE'
+const ADD_TASK = 'TASK_ADD_ALL'
+const ADD_TASKS = 'TASK_ADD_TASKS'
 
 const TASK_STAGES = {
     close: 'CLOSE',
@@ -29,8 +29,13 @@ const defaultState = {
 export default function tasksReducer(state = defaultState, action) {
     switch (action.type) {
         case(ADD_TASK): {
-            state.tasks[action.task.id] = action.task
-            return state
+            const newState ={}
+            newState.tasks = {...state.tasks}
+            newState.tasks[action.task.id] = action.task
+            return {
+                ...state,
+                ...newState
+            }
         }
         case(ADD_TASKS): {
             return {
@@ -48,12 +53,22 @@ export default function tasksReducer(state = defaultState, action) {
             }
         }
         case(REMOVE_TASK): {
-            delete state.tasks[action.key]
-            return state
+            const newState ={}
+            newState.tasks = {...state.tasks}
+            delete newState.tasks[action.key]
+            return {
+                ...state,
+                ...newState
+            }
         }
         case(UPDATE_TASK): {
-            state.tasks[action.task.id] = action.task
-            return state;
+            const newState ={}
+            newState.tasks = {...state.tasks}
+            newState.tasks[action.task.id] = action.task
+            return {
+                ...state,
+                ...newState
+            }
         }
         default: {
             return state
@@ -114,6 +129,7 @@ export function loadTasksFromServ(teamId) {
             const cookies = new Cookies()
             const response = await getTeam(teamId, cookies.get('accessToken'))
             dispatch(setTasksAC(response.tasks))
+            return Promise.resolve()
         } catch (err) {
             return Promise.reject(err)
         }
@@ -126,6 +142,7 @@ export function loadTasksFromTrello(trello) {
             const cookies = new Cookies()
             const response = await importTrello(trello, cookies.get('accessToken'))
             dispatch(addTasksAC(response))
+            return Promise.resolve()
         } catch (err) {
             return Promise.reject(err)
         }
@@ -155,6 +172,7 @@ export function changeStageTaskOnServ(taskId, stage) {
                 }
             }
             dispatch(updateTask(response))
+            return Promise.resolve()
         } catch (err) {
             return Promise.reject(err)
         }
@@ -167,6 +185,7 @@ export function setWorkerOnTask(workerId) {
             const cookies = new Cookies()
             const response = await setWorker(workerId, cookies.get('accessToken'))
             dispatch(updateTaskAC(response))
+            return Promise.resolve()
         } catch (err) {
             return Promise.reject(err)
         }
@@ -179,6 +198,7 @@ export function updateTaskOnServ(task) {
             const cookies = new Cookies()
             const response = await updateTask(task, cookies.get('accessToken'))
             dispatch(updateTaskAC(response))
+            return Promise.resolve()
         } catch (err) {
             return Promise.reject(err)
         }
@@ -191,6 +211,7 @@ export function createTaskOnServ(task) {
             const cookies = new Cookies()
             const response = await createTask(task, cookies.get('accessToken'))
             dispatch(addTaskAC(response))
+            return Promise.resolve()
         } catch (err) {
             return Promise.reject(err)
         }
@@ -203,6 +224,7 @@ export function removeTaskFromServ(taskId) {
             const cookies = new Cookies()
             await removeTask(taskId, cookies.get('accessToken'))
             dispatch(removeTaskAC(taskId))
+            return Promise.resolve()
         } catch (err) {
             return Promise.reject(err)
         }

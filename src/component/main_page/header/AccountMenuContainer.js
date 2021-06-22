@@ -7,18 +7,9 @@ import {useHistory} from "react-router-dom";
 import {getUsernameFromCookie} from "../../../utils/cookiesUtils";
 
 function AccountMenuContainer({userData, userLogout, loadUser}) {
-    const [open, setOpen] = useState()
     const [hasData, setData] = useState(false)
 
     const history = useHistory()
-
-    const onOpen = () => {
-        setOpen(true)
-    }
-
-    const onClose = () => {
-        setOpen(false)
-    }
 
     async function logoutAction() {
         await userLogout()
@@ -34,9 +25,6 @@ function AccountMenuContainer({userData, userLogout, loadUser}) {
 
     return (
         <AccountMenu
-            onOpen = {onOpen}
-            onClose = {onClose}
-            isOpen = {open}
             userData = {userData}
             onLogout = {logoutAction}
         />

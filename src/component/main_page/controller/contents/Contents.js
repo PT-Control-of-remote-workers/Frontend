@@ -1,12 +1,12 @@
 import {Box} from "grommet";
 import React from "react";
 import {PreviewContent} from "./preview/PreviewContent";
+import TeamsContainer from "./teams/TeamsContainer";
 
 export function Contents({content}) {
     return (
         <Box
             gridArea="content"
-            justify="start"
             align={"center"}
             background={"back"}
             width={"100%"}
@@ -26,6 +26,10 @@ function switchContent(content) {
             return (
                 <PreviewContent/>
 
+            )
+        case "teams":
+            return (
+                <TeamsContainer/>
             )
         default:
             return (

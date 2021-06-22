@@ -1,7 +1,8 @@
 import React, {useState} from "react";
-import {Grid} from "grommet";
+import {Box, Grid} from "grommet";
 import Sidebar from "./sidebar/Sidebar";
 import {Contents} from "./contents/Contents";
+import SidebarContainer from "./sidebar/SidebarConteiner";
 
 export function Controller() {
 
@@ -12,19 +13,23 @@ export function Controller() {
     const [content, setContent] = useState(defaultContent)
 
     return (
+        <Box>
+
         <Grid
+            fill
             gridArea={"controller"}
             columns={['auto', 'flex']}
             areas={[
                 ['sidebar', 'content'],
             ]}
         >
-            <Sidebar
+            <SidebarContainer
                 setContent={setContent}
             />
             <Contents
                 content={content}
             />
         </Grid>
+        </Box>
     )
 }

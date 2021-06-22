@@ -1,7 +1,7 @@
 import {Cookies} from 'react-cookie'
 import {tasksOfWorker} from "../../api/task_api";
 
-const SET_TASKS = 'SET_TASKS'
+const SET_TASKS = 'WORKER_TASKS_SET'
 
 const defaultState = {
     tasks: null
@@ -34,6 +34,7 @@ export function loadWorkerTasksFromServ(workerId) {
             const cookies = new Cookies()
             const response = await tasksOfWorker(workerId, cookies.get('accessToken'))
             dispatch(setTasksAC(response.tasks))
+            return Promise.resolve()
         } catch (err) {
             return Promise.reject(err)
         }

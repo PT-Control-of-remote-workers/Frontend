@@ -27,7 +27,6 @@ export function selectTaskStatistic(state) {
 }
 
 export function selectUserData(state) {
-    console.log(state)
     return state.user.userData
 }
 

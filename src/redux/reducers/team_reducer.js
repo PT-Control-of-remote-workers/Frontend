@@ -1,7 +1,7 @@
 import {createTeam, getTeam, getTeams, removeTeam} from "../../api/teams_api";
 import {Cookies} from 'react-cookie'
 
-const SET_TEAM = 'SET_TEAM'
+const SET_TEAM = 'TEAM_SET'
 
 const defaultState = {
     team: null
@@ -34,6 +34,7 @@ export function loadTeamFromServ(teamId) {
             const cookies = new Cookies()
             const response = await getTeam(teamId, cookies.get('accessToken'))
             dispatch(setTeamAC(response))
+            return Promise.resolve()
         } catch (err) {
             return Promise.reject(err)
         }

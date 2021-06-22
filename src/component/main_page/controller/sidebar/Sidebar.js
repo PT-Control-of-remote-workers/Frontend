@@ -2,7 +2,7 @@ import {Box, Grid, Text} from "grommet";
 import React from "react";
 import AppBtn from "../../../util/AppBtn";
 
-export default function Sidebar({setContent}) {
+export default function Sidebar({setContent, teamName, isTeamSelect}) {
 
     return (
         <Box
@@ -16,12 +16,14 @@ export default function Sidebar({setContent}) {
             fill={"vertical"}
         >
             <AppBtn
-                name="Team name"
+                name={teamName}
                 type="action"
                 action={() => {
-                    setContent({
-                        type: "team"
-                    })
+                    if (isTeamSelect) {
+                        setContent({
+                            type: "team"
+                        })
+                    }
                 }}
             />
 

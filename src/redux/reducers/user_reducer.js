@@ -81,8 +81,7 @@ export function authUser(userReg) {
                 result.refreshTokenTimeout,
                 userReg.username
             )
-            let user = await getUser(userReg.username)
-            dispatch(setUserDataAC(user))
+            return Promise.resolve()
         } catch (err) {
             return Promise.reject(err)
         }

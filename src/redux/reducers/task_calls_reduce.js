@@ -2,7 +2,7 @@ import {Cookies} from 'react-cookie'
 import {teamCalls} from "../../api/statistics_api";
 import {getStatisticOfTask} from "./team_calls_reduce";
 
-const SET_CALLS = 'SET_TASKS'
+const SET_CALLS = 'CALLS_TASK_SET'
 
 const defaultState = {
     statistic: null,

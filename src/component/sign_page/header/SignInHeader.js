@@ -1,7 +1,6 @@
 import React from 'react'
 import {Box, Heading, Text} from 'grommet'
 import {NavLink} from 'react-router-dom'
-import SignInFrom from "../sign_in/SignInFrom";
 import SignInFormContainer from "../sign_in/SignInFormContainer";
 
 export default function SignInHeader() {

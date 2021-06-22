@@ -1,7 +1,7 @@
 import {Cookies} from 'react-cookie'
 import {teamCalls} from "../../api/statistics_api";
 
-const SET_CALLS = 'SET_TASKS'
+const SET_CALLS = 'TEAM_CALLS_SET'
 
 const defaultState = {
     statistics: null,
@@ -51,6 +51,7 @@ export function loadStatisticTeamFromServ(periodCalls) {
             }
 
             dispatch(setCallsAC(calls, statistics))
+            return Promise.resolve()
         } catch (err) {
             return Promise.reject(err)
         }

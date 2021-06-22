@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Close} from 'grommet-icons';
 
-import {Box, Button, DropButton, Heading, Text} from 'grommet';
+import {Box, Heading, Text} from 'grommet';
 import AppBtn from "../../util/AppBtn";
+import {AppDropBtn} from "../../util/AppDropBtn";
 
-const DropContent = ({onClose, onLogout, userData}) => (
+const DropContent = ({onLogout, userData}) => (
     <Box
         border
         align={"center"}
@@ -20,7 +21,6 @@ const DropContent = ({onClose, onLogout, userData}) => (
                 {userData.username}
             </Heading>
             }
-            <Button icon={<Close/>} onClick={onClose}/>
         </Box>
 
         <AppBtn name={"Profile"} type={"droMenu"} action={() => {
@@ -34,11 +34,7 @@ const DropContent = ({onClose, onLogout, userData}) => (
     </Box>
 );
 
-DropContent.propTypes = {
-    onClose: PropTypes.func.isRequired,
-};
-
-export default function AccountMenu({onLogout, isOpen, onOpen, onClose, userData}) {
+export default function AccountMenu({onLogout, userData}) {
     return (
         <Box
             direction="row"
@@ -64,19 +60,11 @@ export default function AccountMenu({onLogout, isOpen, onOpen, onClose, userData
             {/*>*/}
             {/*    A*/}
             {/*</Avatar>*/}
-            <DropButton
-                style={{
-                    'hover:background-color': "#4FAEB4",
-                    'border-color': "white",
-                    'color': "white",
-                }}
-                label="Menu"
-                open={isOpen}
-                onOpen={onOpen}
-                onClose={onClose}
-                dropContent={<DropContent onClose={onClose} onLogout={onLogout} userData = {userData}/>}
-                dropProps={{align: {top: 'bottom'}}}
-            />
+                <AppDropBtn
+                    type={"menu"}
+                    innerContent={<DropContent onLogout={onLogout} userData = {userData}/>}
+                    label="Menu"
+                />
             </>
         </Box>
     );
