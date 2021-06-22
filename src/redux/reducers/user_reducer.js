@@ -26,10 +26,13 @@ export default function userReducer(state = defaultState, action) {
 
 export function setUserDataAC(userData) {
     if(userData) {
-        userData.userAttributes = userData.userAttributes.reduce((acc, att) => {
-            acc[att.name] = att.value
-            return acc
-        })
+        userData = {
+            ...userData,
+            ...userData.userAttributes.reduce((acc, att) => {
+                acc[att.name] = att.value
+                return acc
+            })
+        }
     }
     return {
         type: SET_USER_DATA,

@@ -3,9 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.11.6",
-    "@testing-library/react": "^11.2.2",
-    "@testing-library/user-event": "^12.5.0",
     "axios": "^0.21.0",
     "grommet": "^2.17.1",
     "grommet-icons": "^4.5.0",
@@ -20,10 +17,8 @@
     "react-types": "^0.1.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "stomp-websocket": "^2.3.4-next",
     "styled-components": "^5.2.1",
-    "web-vitals": "^0.2.4",
-    "webrtc-adapter": "^7.7.1"
+    "web-vitals": "^0.2.4"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,6 +1,5 @@
 import {Cookies} from 'react-cookie'
 import {teamCalls} from "../../api/statistics_api";
-import {Dependency as dates} from "webpack";
 
 const SET_CALLS = 'SET_TASKS'
 
@@ -59,7 +58,7 @@ export function loadStatisticTeamFromServ(periodCalls) {
 }
 
 export function getStatisticOfTask(calls, distance) {
-    calls.sort(dates.compare)
+    calls.sort()
 
     let statistic = {
         timeWork: 0,

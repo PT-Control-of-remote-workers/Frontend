@@ -1,5 +1,5 @@
 import React from 'react'
-import {Route} from 'react-router-dom'
+import {Route, Switch, Router} from 'react-router-dom'
 import Main from "./component/main_page/Main";
 import SignUpPage from "./component/sign_page/SignUpPage";
 import {cookies} from "./utils/cookiesUtils";
@@ -13,12 +13,14 @@ export default function App() {
         <>
             <Route
                 path={'/main'}
+                exact={true}
                 render={() => (
                     <Main/>
                 )}
             />
             <Route
                 path={'/sign_page'}
+                exact={true}
                 render={() => (
                     <SignUpPage/>
                 )}
@@ -26,6 +28,7 @@ export default function App() {
             {checkCookie() &&
             <Route
                 path={'/'}
+                exact={true}
                 render={() => (
                     <Main/>
                 )}
@@ -34,6 +37,7 @@ export default function App() {
             {!checkCookie() &&
             <Route
                 path={'/'}
+                exact={true}
                 render={() => (
                     <SignUpPage/>
                 )}

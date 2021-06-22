@@ -18,7 +18,7 @@ export default function SignInFrom({onSubmit, setValue, value, errorMessage, set
             />
             {isOpen && (<Layer position="center" onClickOutside={onClose} onEsc={onClose}>
                 <Box
-                    round={"small"}
+                    round={"large"}
                     justify={"start"}
                     align={"center"}
                     pad="medium"
