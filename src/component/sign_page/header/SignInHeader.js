@@ -1,7 +1,8 @@
 import React from 'react'
 import {Box, Heading, Text} from 'grommet'
 import {NavLink} from 'react-router-dom'
-import SignIn from "./SignIn";
+import SignInFrom from "../sign_in/SignInFrom";
+import SignInFormContainer from "../sign_in/SignInFormContainer";
 
 export default function SignInHeader() {
     return (
@@ -35,7 +36,7 @@ export default function SignInHeader() {
 
             </Text>
 
-            <SignIn/>
+            <SignInFormContainer/>
             </Box>
 
         </Box>

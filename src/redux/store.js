@@ -18,8 +18,6 @@ const reducers = combineReducers({
     tasks: tasksReducer
 })
 
-// Выбирается функция compose в зависимости от наличия плагина Redux DevTools
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-const store = createStore(reducers, composeEnhancers(applyMiddleware(thunkMiddleware)))
+const store = createStore(reducers, compose(applyMiddleware(thunkMiddleware)))
 
 export {store}

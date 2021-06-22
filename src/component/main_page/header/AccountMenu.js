@@ -2,11 +2,10 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {Close} from 'grommet-icons';
 
-import {Box, Button, DropButton, Heading, Avatar} from 'grommet';
+import {Box, Button, DropButton, Heading, Avatar, Text} from 'grommet';
 import AppBtn from "../../util/AppBtn";
-import {NavLink} from "react-router-dom";
 
-const DropContent = ({onClose}) => (
+const DropContent = ({onClose, onLogout}) => (
     <Box
         border
         align={"center"}
@@ -25,11 +24,9 @@ const DropContent = ({onClose}) => (
         <AppBtn name={"Profile"} type={"dropMenu"} action={() => {
         }}/>
 
-        <NavLink to={'/sign_page'} style={{textDecoration: 'none'}}>
-            <AppBtn name={"Sign out"} type={"dropMenu"} action={() => {
-                localStorage.removeItem("name")
-            }}/>
-        </NavLink>
+        <AppBtn name={"Sign out"} type={"droMenu"} action={() => {
+            onLogout()
+        }}/>
 
     </Box>
 );
@@ -38,19 +35,15 @@ DropContent.propTypes = {
     onClose: PropTypes.func.isRequired,
 };
 
-export default function AccountMenu() {
-    const [open, setOpen] = useState();
-    const onOpen = () => {
-        setOpen(true);
-    };
-    const onClose = () => {
-        setOpen(false);
-    };
+export default function AccountMenu({onLogout, isOpen, onOpen, onClose, userData}) {
 
     return (
         <Box
             direction="row"
         >
+            <Text>
+                {userData}
+            </Text>
             <Avatar
                 border={{size: 'small', color: "white"}}
                 background={"white"}
@@ -66,10 +59,10 @@ export default function AccountMenu() {
                     'color': "white",
                 }}
                 label="Menu"
-                open={open}
+                open={isOpen}
                 onOpen={onOpen}
                 onClose={onClose}
-                dropContent={<DropContent onClose={onClose}/>}
+                dropContent={<DropContent onClose={onClose} onLogout={onLogout}/>}
                 dropProps={{align: {top: 'bottom'}}}
             />
         </Box>

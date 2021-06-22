@@ -10,6 +10,7 @@ export default function SingUpForm({onSubmit, setValue, value, errorMessage, set
             gap={"small"}
             width={"medium"}
             height={"100%"}
+            overflow={"scroll"}
         >
             <Heading textAlign={"center"} level={2}>
                 Sign Up

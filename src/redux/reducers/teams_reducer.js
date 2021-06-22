@@ -1,4 +1,3 @@
-import {} from '../../API/team_api'
 import {createTeam, getTeams, removeTeam} from "../../api/teams_api";
 import {Cookies} from 'react-cookie'
 

@@ -1,20 +1,8 @@
 import React, {useState} from 'react';
 
-import {Box, Button, DropButton, Heading, Avatar, Layer, Form, FormField, TextInput} from 'grommet';
-import {useHistory} from "react-router-dom";
+import {Box, Button, Heading, Layer, Form, FormField, TextInput, Text} from 'grommet';
 
-export default function SignIn() {
-    const [value, setValue] = React.useState({});
-    const history = useHistory();
-    const [open, setOpen] = useState();
-
-    const onOpen = () => {
-        setOpen(true);
-    }
-
-    const onClose = () => setOpen(undefined);
-    console.log(open)
-
+export default function SignInFrom({onSubmit, setValue, value, errorMessage, setErrorMessage, isOpen, onOpen, onClose}) {
     return (
         <>
             <Button
@@ -28,8 +16,9 @@ export default function SignIn() {
                 label="Sign In"
                 onClick={onOpen}
             />
-            {open && (<Layer position="center" onClickOutside={onClose} onEsc={onClose}>
+            {isOpen && (<Layer position="center" onClickOutside={onClose} onEsc={onClose}>
                 <Box
+                    round={"small"}
                     justify={"start"}
                     align={"center"}
                     pad="medium"
@@ -43,25 +32,22 @@ export default function SignIn() {
                         value={value}
                         onChange={nextValue => {
                             setValue(nextValue)
+                            setErrorMessage(undefined)
                         }
                         }
-                        onSubmit={({value}) => {
-                            localStorage.setItem("name", "Name from DB")
-                            history.push("/index");
-                            onClose()
-                        }}
+                        onSubmit={onSubmit}
                     >
                         <Box
                             gap={"medium"}
                         >
                             <FormField
-                                label={'Email'}
-                                name={'email'}
+                                label={'Login'}
+                                name={'username'}
                                 required={true}
                             >
                                 <TextInput
-                                    name={'email'}
-                                    type={'email'}
+                                    name={'username'}
+                                    type={'username'}
                                     width={'large'}
                                 />
                             </FormField>
@@ -76,6 +62,20 @@ export default function SignIn() {
                                     width={'large'}
                                 />
                             </FormField>
+                            {errorMessage !== undefined &&
+                            <Box
+                                align={'center'}
+                                margin={{vertical: 'small'}}
+                            >
+                                <Text
+                                    color={'status-critical'}
+                                    size={'large'}
+                                    weight={'bold'}
+                                >
+                                    {errorMessage}
+                                </Text>
+                            </Box>
+                            }
                             <Box
                                 width={"100%"}
                                 align={"center"}

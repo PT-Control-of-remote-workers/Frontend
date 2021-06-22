@@ -1,4 +1,3 @@
-import {} from '../../API/task_api.js'
 import {Cookies} from 'react-cookie'
 import {getTeam} from "../../api/teams_api";
 import {
@@ -9,7 +8,7 @@ import {
     removeTask,
     updateTask,
     completeTask, setWorker
-} from "../../API/task_api";
+} from "../../api/task_api";
 
 const SET_TASKS = 'SET_TASKS'
 const REMOVE_TASK = 'REMOVE_TASK'

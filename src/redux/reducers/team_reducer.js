@@ -1,4 +1,3 @@
-import {} from '../../API/team_api'
 import {createTeam, getTeam, getTeams, removeTeam} from "../../api/teams_api";
 import {Cookies} from 'react-cookie'
 
@@ -33,7 +32,7 @@ export function loadTeamFromServ(teamId) {
     return async (dispatch, getState) => {
         try {
             const cookies = new Cookies()
-            const response = await getTeam(team, cookies.get('accessToken'))
+            const response = await getTeam(teamId, cookies.get('accessToken'))
             dispatch(setTeamAC(response))
         } catch (err) {
             return Promise.reject(err)

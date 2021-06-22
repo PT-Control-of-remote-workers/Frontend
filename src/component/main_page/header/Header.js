@@ -2,6 +2,7 @@ import React from 'react'
 import {Box, Heading, Text} from 'grommet'
 import {NavLink} from 'react-router-dom'
 import AccountMenu from "./AccountMenu";
+import AccountMenuContainer from "./AccountMenuContainer";
 
 export default function Header() {
     return (
@@ -35,7 +36,7 @@ export default function Header() {
 
             </Text>
 
-            <AccountMenu/>
+            <AccountMenuContainer/>
             </Box>
 
         </Box>

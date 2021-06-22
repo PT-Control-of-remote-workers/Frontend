@@ -1,7 +1,7 @@
 import {Cookies} from 'react-cookie'
 import {refreshAccess} from '../api/user_api'
 
-const cookies = new Cookies()
+export const cookies = new Cookies()
 
 export async function refreshTokensCookies() {
     if (!cookies.get('refreshTokenTimeout')) {

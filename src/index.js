@@ -1,5 +1,3 @@
-import {createStore, compose, applyMiddleware, combineReducers} from 'redux'
-import thunkMiddleware from 'redux-thunk'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
@@ -7,8 +5,7 @@ import {BrowserRouter} from 'react-router-dom'
 import {Provider} from 'react-redux'
 import { grommet } from 'grommet/themes';
 import {Grommet} from 'grommet'
-
-const store = createStore(combineReducers({}), compose(applyMiddleware(thunkMiddleware)))
+import {store} from "./redux/store";
 
 const theme = {
     ...grommet,

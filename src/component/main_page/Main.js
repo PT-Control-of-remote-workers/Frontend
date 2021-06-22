@@ -33,6 +33,7 @@ export default function Main() {
                 gap={"medium"}
                 direction={"column"}
                 pad={"medium"}
+                overflow={"scroll"}
             >
                 <Content header={"Teams"} type={"team"}/>
                 <Content header={"Tasks"} type={"task"}/>
