@@ -1,8 +1,8 @@
 import {Box, Grid, Text} from "grommet";
 import React from "react";
-import AppBtn from "../../util/AppBtn";
+import AppBtn from "../../../util/AppBtn";
 
-export default function Sidebar() {
+export default function Sidebar({setContent}) {
 
     return (
         <Box
@@ -19,6 +19,9 @@ export default function Sidebar() {
                 name="Team name"
                 type="action"
                 action={() => {
+                    setContent({
+                        type: "team"
+                    })
                 }}
             />
 
@@ -26,6 +29,9 @@ export default function Sidebar() {
                 name="Main"
                 type="action"
                 action={() => {
+                    setContent({
+                        type: "preview"
+                    })
                 }}
             />
 
@@ -33,6 +39,9 @@ export default function Sidebar() {
                 name="Teams"
                 type="action"
                 action={() => {
+                    setContent({
+                        type: "teams"
+                    })
                 }}
             />
 
@@ -40,6 +49,9 @@ export default function Sidebar() {
                 name="Members"
                 type="action"
                 action={() => {
+                    setContent({
+                        type: "members"
+                    })
                 }}
             />
 
@@ -47,6 +59,9 @@ export default function Sidebar() {
                 name="Tasks"
                 type="action"
                 action={() => {
+                    setContent({
+                        type: "tasks"
+                    })
                 }}
             />
         </Box>

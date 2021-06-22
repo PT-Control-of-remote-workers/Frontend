@@ -1,8 +1,9 @@
 import {Box} from "grommet";
 import React from "react";
+import {PreviewContent} from "./PreviewContent";
 import Content from "./Content";
 
-export function Contents() {
+export function Contents({content}) {
     return (
         <Box
             gridArea="content"
@@ -11,13 +12,26 @@ export function Contents() {
             background={"back"}
             width={"100%"}
             height={"100%"}
-            gap={"medium"}
             direction={"column"}
-            pad={"medium"}
+            pad={"small"}
             overflow={"scroll"}
         >
-            <Content header={"Teams"} type={"team"}/>
-            <Content header={"Tasks"} type={"task"}/>
+            {switchContent(content)}
         </Box>
     )
+}
+
+function switchContent(content) {
+    switch (content.type) {
+        case "preview":
+            return (
+                <PreviewContent/>
+
+            )
+        default:
+            return (
+                <>
+                </>
+            )
+    }
 }
