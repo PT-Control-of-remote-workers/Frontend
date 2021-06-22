@@ -1,7 +1,6 @@
 import {Box} from "grommet";
 import React from "react";
-import {PreviewContent} from "./PreviewContent";
-import Content from "./Content";
+import {PreviewContent} from "./preview/PreviewContent";
 
 export function Contents({content}) {
     return (

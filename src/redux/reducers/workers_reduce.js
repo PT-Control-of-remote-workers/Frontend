@@ -37,10 +37,14 @@ function removeWorkerAC(workerId) {
 }
 
 function setWorkersAC(workers) {
-    workers = workers.reduce((sum, act) => {
-        sum[act.username] = act
-        return sum;
-    })
+    if (workers.length !== 0) {
+        workers = workers.reduce((sum = {}, act) => {
+            sum[act.username] = act
+            return sum;
+        })
+    } else {
+        workers = {}
+    }
     return {
         type: SET_WORKERS,
         workers: workers

@@ -18,7 +18,7 @@ export function taskCalls(periodCalls, accessToken) {
 
 export function teamCalls(periodCalls, accessToken) {
     return callsRequest
-        .post('/api/v1/team-calls', periodCalls, {
+        .post('/api/v1/teams-calls', periodCalls, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`
             }

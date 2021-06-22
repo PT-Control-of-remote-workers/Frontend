@@ -1,6 +1,6 @@
-import {auth, register, getUser, logout} from '../../api/user_api'
+import {auth, register, getUser, logout, refreshAccess} from '../../api/user_api'
 import {Cookies} from 'react-cookie'
-import {setTokensCookies, deleteTokensCookies, cookies} from '../../utils/cookiesUtils'
+import {setTokensCookies, deleteTokensCookies, cookies, refreshTokensCookies} from '../../utils/cookiesUtils'
 
 const SET_USER_DATA = 'SET_USER_DATA'
 
@@ -94,6 +94,7 @@ export function loadUser() {
         try {
             const username = cookies.get("username")
             if (username) {
+                await refreshTokensCookies()
                 let user = await getUser(username)
                 dispatch(setUserDataAC(user))
                 return Promise.resolve()

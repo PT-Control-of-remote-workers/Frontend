@@ -7,7 +7,7 @@ const UPDATE_TEAM = 'UPDATE_TEAM'
 const ADD_TEAM = 'ADD_TEAM'
 
 const defaultState = {
-    teams: {}
+    teams: null
 }
 
 export default function teamsReducer(state = defaultState, action) {
@@ -51,10 +51,14 @@ function removeTeamAC(teamId) {
 }
 
 function setTeamsAC(teams) {
-    teams = teams.reduce((sum, act) => {
-        sum[act.id] = act
-        return sum;
-    })
+    if (teams.length !== 0) {
+        teams = teams.reduce((sum = {}, act) => {
+            sum[act.id] = act
+            return sum;
+        })
+    } else {
+        teams = {}
+    }
     return {
         type: SET_TEAMS,
         teams: teams

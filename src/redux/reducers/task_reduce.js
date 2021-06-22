@@ -48,7 +48,7 @@ export default function tasksReducer(state = defaultState, action) {
             }
         }
         case(REMOVE_TASK): {
-            delete state.teams[action.key]
+            delete state.tasks[action.key]
             return state
         }
         case(UPDATE_TASK): {
@@ -63,7 +63,7 @@ export default function tasksReducer(state = defaultState, action) {
 
 function addTaskAC(task) {
     return {
-        type: REMOVE_TASK,
+        type: ADD_TASK,
         task: task
     }
 }
@@ -76,10 +76,14 @@ function removeTaskAC(taskId) {
 }
 
 function setTasksAC(tasks) {
-    tasks = tasks.reduce((sum, act) => {
-        sum[act.id] = act
-        return sum;
-    })
+    if (tasks.length !== 0) {
+        tasks = tasks.reduce((sum = {}, act) => {
+            sum[act.id] = act
+            return sum;
+        })
+    } else {
+        tasks = {}
+    }
     return {
         type: SET_TASKS,
         tasks: tasks

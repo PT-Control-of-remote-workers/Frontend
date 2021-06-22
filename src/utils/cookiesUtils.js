@@ -56,3 +56,7 @@ export function deleteTokensCookies() {
     cookies.remove('refreshTokenTimeout')
     cookies.remove('username')
 }
+
+export function getUsernameFromCookie() {
+    return cookies.get('username')
+}

@@ -1,6 +1,7 @@
-import Content from "./Content";
 import React from "react";
 import {Box} from "grommet";
+import PreviewTeamsContainer from "./team/PreviewTeamsContainer";
+import PreviewTasksContainer from "./tasks/PreviewTasksContainer";
 
 export function PreviewContent() {
     return (
@@ -13,8 +14,8 @@ export function PreviewContent() {
             width={"100%"}
             height={"100%"}
         >
-            <Content header={"Teams"} type={"team"}/>
-            <Content header={"Tasks"} type={"task"}/>
+            <PreviewTeamsContainer/>
+            <PreviewTasksContainer/>
 
         </Box>
     )

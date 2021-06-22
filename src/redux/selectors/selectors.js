@@ -34,3 +34,7 @@ export function selectUserData(state) {
 export function selectTasksOfTeam(state) {
     return state.tasks.tasks
 }
+
+export function selectWorkerTasks(state) {
+    return state.workerTasks.tasks
+}

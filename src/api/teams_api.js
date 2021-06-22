@@ -2,7 +2,7 @@ import {workManagerRequest} from './api'
 
 export function createTeam(team, accessToken) {
     return workManagerRequest
-        .post('/api/v1/team', team, {
+        .post('/api/v1/teams', team, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`
             }
@@ -35,7 +35,7 @@ export function getTeam(teamId, accessToken) {
 
 export function getTeams(workerId, accessToken) {
     return workManagerRequest
-        .post(`/api/v1/teams/workers/${workerId}`, {
+        .post(`/api/v1/teams/workers/${workerId}`, '', {
             headers: {
                 'Authorization': `Bearer ${accessToken}`
             }
@@ -52,7 +52,7 @@ export function getTeams(workerId, accessToken) {
 
 export function addLeaderToTeam(teamAndUser, accessToken) {
     return workManagerRequest
-        .put('/api/v1/team/add-leaders', teamAndUser, {
+        .put('/api/v1/teams/add-leaders', teamAndUser, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`
             }
@@ -69,7 +69,7 @@ export function addLeaderToTeam(teamAndUser, accessToken) {
 
 export function addWorkerToTeam(teamAndUser, accessToken) {
     return workManagerRequest
-        .put('/api/v1/team/add-workers', teamAndUser, {
+        .put('/api/v1/teams/add-workers', teamAndUser, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`
             }
@@ -86,7 +86,7 @@ export function addWorkerToTeam(teamAndUser, accessToken) {
 
 export function removeLeaderToTeam(teamAndUser, accessToken) {
     return workManagerRequest
-        .put('/api/v1/team/remove-leaders', teamAndUser, {
+        .put('/api/v1/teams/remove-leaders', teamAndUser, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`
             }
@@ -103,7 +103,7 @@ export function removeLeaderToTeam(teamAndUser, accessToken) {
 
 export function removeWorkerToTeam(teamAndUser, accessToken) {
     return workManagerRequest
-        .put('/api/v1/team/remove-workers', teamAndUser, {
+        .put('/api/v1/teams/remove-workers', teamAndUser, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`
             }
@@ -120,7 +120,7 @@ export function removeWorkerToTeam(teamAndUser, accessToken) {
 
 export function setAdmin(teamAndUser, accessToken) {
     return workManagerRequest
-        .put('/api/v1/team/set-admin', teamAndUser, {
+        .put('/api/v1/teams/set-admin', teamAndUser, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`
             }

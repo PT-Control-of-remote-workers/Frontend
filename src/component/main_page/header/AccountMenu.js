@@ -66,7 +66,7 @@ export default function AccountMenu({onLogout, isOpen, onOpen, onClose, userData
             {/*</Avatar>*/}
             <DropButton
                 style={{
-                    'background-color': "#4FAEB4",
+                    'hover:background-color': "#4FAEB4",
                     'border-color': "white",
                     'color': "white",
                 }}

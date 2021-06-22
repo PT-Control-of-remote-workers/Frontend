@@ -7,14 +7,13 @@ export default function Header() {
     return (
         <Box
             gridArea={"header"}
-
-            tag={'header'}
-            pad={{vertical: 'medium', horizontal: 'medium'}}
+            pad={{
+                "left": "medium",
+                "right": "small"
+            }}
             background={'header'}
-            elevation={'medium'}
         >
             <Box
-                margin={{right: "50px"}}
                 justify={'between'}
                 direction={'row'}
                 align="center"
