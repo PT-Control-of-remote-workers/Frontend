@@ -1,43 +1,25 @@
 import React from 'react';
 
-import {Box, Grid, Text} from 'grommet';
-import Sidebar from "./sidebar/Sidebar";
+import {Box, Grid} from 'grommet';
 import Footer from "../footer/Footer";
 import Header from "./header/Header";
-import Content from "./content/Content";
+import {Controller} from "./controller/Controller";
 
 export default function Main() {
 
     return (
         <Grid
             fill
-            rows={['auto', 'flex']}
-            columns={['auto', 'flex']}
+            rows={["auto", "flex", "auto"]}
             areas={[
-                ['header', 'header'],
-                ['sidebar', 'main'],
-                ['footer', 'footer'],
+                ['header'],
+                ['controller'],
+                ['footer'],
             ]}
         >
             <Header/>
-            <Sidebar/>
+            <Controller/>
             <Footer/>
-
-            <Box
-                gridArea="main"
-                justify="start"
-                align={"center"}
-                background={"back"}
-                width={"100%"}
-                height={"100%"}
-                gap={"medium"}
-                direction={"column"}
-                pad={"medium"}
-                overflow={"scroll"}
-            >
-                <Content header={"Teams"} type={"team"}/>
-                <Content header={"Tasks"} type={"task"}/>
-            </Box>
 
         </Grid>
     );

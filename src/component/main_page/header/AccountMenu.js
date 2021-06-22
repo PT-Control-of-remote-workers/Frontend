@@ -13,12 +13,13 @@ const DropContent = ({onClose, onLogout, userData}) => (
         pad={"small"}
         background={"white"}
         fill={"vertical"}
-        round={"medium"}
     >
         <Box direction="row" justify="between" align="center">
+            {userData &&
             <Heading level={2} margin="small">
                 {userData.username}
             </Heading>
+            }
             <Button icon={<Close/>} onClick={onClose}/>
         </Box>
 
@@ -38,7 +39,6 @@ DropContent.propTypes = {
 };
 
 export default function AccountMenu({onLogout, isOpen, onOpen, onClose, userData}) {
-    console.log(userData)
     return (
         <Box
             direction="row"

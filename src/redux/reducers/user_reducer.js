@@ -1,6 +1,6 @@
 import {auth, register, getUser, logout} from '../../api/user_api'
 import {Cookies} from 'react-cookie'
-import {setTokensCookies, deleteTokensCookies} from '../../utils/cookiesUtils'
+import {setTokensCookies, deleteTokensCookies, cookies} from '../../utils/cookiesUtils'
 
 const SET_USER_DATA = 'SET_USER_DATA'
 
@@ -83,6 +83,23 @@ export function authUser(userReg) {
             )
             let user = await getUser(userReg.username)
             dispatch(setUserDataAC(user))
+        } catch (err) {
+            return Promise.reject(err)
+        }
+    }
+}
+
+export function loadUser() {
+    return async dispatch => {
+        try {
+            const username = cookies.get("username")
+            if (username) {
+                let user = await getUser(username)
+                dispatch(setUserDataAC(user))
+                return Promise.resolve()
+            }
+
+            dispatch(setUserDataAC(null))
         } catch (err) {
             return Promise.reject(err)
         }
