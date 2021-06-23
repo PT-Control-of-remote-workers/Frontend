@@ -1,14 +1,15 @@
-import {Box, Button, Form, FormField, Heading, Layer, Text, TextInput} from "grommet";
+import {Box, Button, Form, FormField, Heading, Layer, Text, TextArea, TextInput} from "grommet";
+import AppBtn from "../../../../../util/AppBtn";
+import {styles} from "../../../../../util/styles";
 import React from "react";
-import AppBtn from "../../../../util/AppBtn";
-import {styles} from "../../../../util/styles";
 
-export function CreateTeam({onSubmit, setValue, value, errorMessage, setErrorMessage, isOpen, onOpen, onClose}) {
+export function EditTask({onSubmit, setValue, value, errorMessage, setErrorMessage, isOpen, onOpen, onClose})
+{
     return (
         <>
             <AppBtn
-                type={"create"}
-                name="Create"
+                type={"update"}
+                name="Edit"
                 action={onOpen}
             />
             {isOpen && (<Layer position="center" onClickOutside={onClose} onEsc={onClose}>
@@ -21,7 +22,7 @@ export function CreateTeam({onSubmit, setValue, value, errorMessage, setErrorMes
                     width="medium"
                 >
                     <Heading level={3}>
-                        Create team
+                        Edit task
                     </Heading>
                     <Form
                         value={value}
@@ -36,7 +37,7 @@ export function CreateTeam({onSubmit, setValue, value, errorMessage, setErrorMes
                             gap={"medium"}
                         >
                             <FormField
-                                label={'Name of team'}
+                                label={'Name'}
                                 name={'name'}
                                 required={true}
                             >
@@ -45,6 +46,9 @@ export function CreateTeam({onSubmit, setValue, value, errorMessage, setErrorMes
                                     type={'name'}
                                     width={'large'}
                                 />
+                            </FormField>
+                            <FormField name="description" label="Description">
+                                <TextArea name="description" placeholder="Description of task"/>
                             </FormField>
                             {errorMessage !== undefined &&
                             <Box
@@ -67,7 +71,7 @@ export function CreateTeam({onSubmit, setValue, value, errorMessage, setErrorMes
                                 <Button
                                     primary
                                     type={"submit"}
-                                    label={"Create"}
+                                    label={"Update"}
                                     style={styles["create"]}
                                 />
                             </Box>

@@ -1,4 +1,5 @@
 import { userRequest } from './api'
+import {getMessageFromError} from "../utils/errorHandler";
 
 export function getUsersInGroup(group,accessToken) {
     return userRequest
@@ -8,11 +9,8 @@ export function getUsersInGroup(group,accessToken) {
             }})
         .then(res => res.data)
         .catch(err => {
-            if (err.response) {
-                throw new Error(err.response.data.message)
-            } else {
-                throw err
-            }
+            const msg = getMessageFromError(err)
+            throw new Error(msg)
         })
 }
 
@@ -24,11 +22,8 @@ export function disable(username,accessToken) {
             }})
         .then(res => res.data)
         .catch(err => {
-            if (err.response) {
-                throw new Error(err.response.data.message)
-            } else {
-                throw err
-            }
+            const msg = getMessageFromError(err)
+            throw new Error(msg)
         })
 }
 export function enable(username,accessToken) {
@@ -39,11 +34,8 @@ export function enable(username,accessToken) {
             }})
         .then(res => res.data)
         .catch(err => {
-            if (err.response) {
-                throw new Error(err.response.data.message)
-            } else {
-                throw err
-            }
+            const msg = getMessageFromError(err)
+            throw new Error(msg)
         })
 }
 
@@ -55,11 +47,8 @@ export function addUserToGroup(username,group,accessToken) {
             }})
         .then(res => res.data)
         .catch(err => {
-            if (err.response) {
-                throw new Error(err.response.data.message)
-            } else {
-                throw err
-            }
+            const msg = getMessageFromError(err)
+            throw new Error(msg)
         })
 }
 
@@ -71,10 +60,7 @@ export function removeUserFromGroup(username,group,accessToken) {
             }})
         .then(res => res.data)
         .catch(err => {
-            if (err.response) {
-                throw new Error(err.response.data.message)
-            } else {
-                throw err
-            }
+            const msg = getMessageFromError(err)
+            throw new Error(msg)
         })
 }

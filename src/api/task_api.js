@@ -1,4 +1,5 @@
 import {workManagerRequest} from './api'
+import {getMessageFromError} from "../utils/errorHandler";
 
 export function createTask(task, accessToken) {
     return workManagerRequest
@@ -7,12 +8,10 @@ export function createTask(task, accessToken) {
                 'Authorization': `Bearer ${accessToken}`
             }
         })
+        .then(res => res.data)
         .catch(err => {
-            if (err.response) {
-                throw new Error(err.response.data.message)
-            } else {
-                throw err
-            }
+            const msg = getMessageFromError(err)
+            throw new Error(msg)
         })
 }
 
@@ -23,12 +22,10 @@ export function updateTask(task, accessToken) {
                 'Authorization': `Bearer ${accessToken}`
             }
         })
+        .then(res => res.data)
         .catch(err => {
-            if (err.response) {
-                throw new Error(err.response.data.message)
-            } else {
-                throw err
-            }
+            const msg = getMessageFromError(err)
+            throw new Error(msg)
         })
 }
 
@@ -41,28 +38,22 @@ export function getTask(taskId, accessToken) {
         })
         .then(res => res.data)
         .catch(err => {
-            if (err.response) {
-                throw new Error(err.response.data.message)
-            } else {
-                throw err
-            }
+            const msg = getMessageFromError(err)
+            throw new Error(msg)
         })
 }
 
 export function getTasksOfTeamAndWorker(teamAndUser, accessToken) {
     return workManagerRequest
-        .post('/api/v1/task/getByWorkerAndTeam', {
+        .post('/api/v1/tasks/getByWorkerAndTeam', {
             headers: {
                 'Authorization': `Bearer ${accessToken}`
             }
         })
         .then(res => res.data)
         .catch(err => {
-            if (err.response) {
-                throw new Error(err.response.data.message)
-            } else {
-                throw err
-            }
+            const msg = getMessageFromError(err)
+            throw new Error(msg)
         })
 }
 
@@ -75,11 +66,8 @@ export function setWorker(taskAndWorker, accessToken) {
         })
         .then(res => res.data)
         .catch(err => {
-            if (err.response) {
-                throw new Error(err.response.data.message)
-            } else {
-                throw err
-            }
+            const msg = getMessageFromError(err)
+            throw new Error(msg)
         })
 }
 

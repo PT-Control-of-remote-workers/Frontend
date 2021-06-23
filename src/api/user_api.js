@@ -1,4 +1,5 @@
 import { userRequest } from './api'
+import {getMessageFromError} from "../utils/errorHandler";
 
 export function register(userData) {
     const formData = new FormData()
@@ -6,11 +7,8 @@ export function register(userData) {
     return userRequest
         .post('/api/v1/registration', formData)
         .catch(err => {
-            if (err.response) {
-                throw new Error(err.response.data.message)
-            } else {
-                throw err
-            }
+            const msg = getMessageFromError(err)
+            throw new Error(msg)
         })
 }
 
@@ -19,11 +17,8 @@ export function auth(formData) {
         .post('/api/v1/auth/login', formData)
         .then(res => res.data)
         .catch(err => {
-            if (err.response) {
-                throw new Error(err.response.data.message)
-            } else {
-                throw err
-            }
+            const msg = getMessageFromError(err)
+            throw new Error(msg)
         })
 }
 
@@ -34,11 +29,8 @@ export function refreshAccess() {
         })
         .then(res => res.data)
         .catch(err => {
-            if (err.response) {
-                throw new Error(err.response.data.message)
-            } else {
-                throw err
-            }
+            const msg = getMessageFromError(err)
+            throw new Error(msg)
         })
 }
 
@@ -47,11 +39,8 @@ export function getUser(username) {
         .get(`/api/v1/users/${username}`)
         .then(res => res.data)
         .catch(err => {
-            if (err.response) {
-                throw new Error(err.response.data.message)
-            } else {
-                throw err
-            }
+            const msg = getMessageFromError(err)
+            throw new Error(msg)
         })
 }
 
@@ -64,10 +53,7 @@ export function logout(accessToken) {
         })
         .then(res => res.data)
         .catch(err => {
-            if (err.response) {
-                throw new Error(err.response.data.message)
-            } else {
-                throw err
-            }
+            const msg = getMessageFromError(err)
+            throw new Error(msg)
         })
 }

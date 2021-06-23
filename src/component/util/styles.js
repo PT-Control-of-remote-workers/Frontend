@@ -1,4 +1,4 @@
-const colors = {
+export const colors = {
     header: "#4FAEB4",
     menu: "rgba(111,75,255,0)",
     back: "#E5E5E5",

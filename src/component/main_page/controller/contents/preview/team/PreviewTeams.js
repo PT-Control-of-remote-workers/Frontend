@@ -112,6 +112,7 @@ export default function PreviewTeams({username, allTeams}) {
                 background={"white"}
                 pad={"medium"}
                 gap={"medium"}
+                height={{min: 'medium'}}
             >
                 <Heading level={2}>
                     Preview teams
@@ -121,7 +122,6 @@ export default function PreviewTeams({username, allTeams}) {
                 >
                     <Box
                         align={"center"}
-                        pad={"xsmall"}
                         gap={"small"}
                         direction={"column"}
                     >

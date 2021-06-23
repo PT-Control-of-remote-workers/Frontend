@@ -1,14 +1,15 @@
-import {Box, Button, Form, FormField, Heading, Layer, Text, TextInput} from "grommet";
+import {Box, Button, Form, FormField, Heading, Layer, Text, TextArea, TextInput} from "grommet";
+import AppBtn from "../../../../../util/AppBtn";
+import {styles} from "../../../../../util/styles";
 import React from "react";
-import AppBtn from "../../../../util/AppBtn";
-import {styles} from "../../../../util/styles";
 
-export function CreateTeam({onSubmit, setValue, value, errorMessage, setErrorMessage, isOpen, onOpen, onClose}) {
+export function TrelloIntegration({onSubmit, setValue, value, errorMessage, setErrorMessage, isOpen, onOpen, onClose})
+{
     return (
         <>
             <AppBtn
-                type={"create"}
-                name="Create"
+                type={"focus"}
+                name="Trello"
                 action={onOpen}
             />
             {isOpen && (<Layer position="center" onClickOutside={onClose} onEsc={onClose}>
@@ -21,12 +22,15 @@ export function CreateTeam({onSubmit, setValue, value, errorMessage, setErrorMes
                     width="medium"
                 >
                     <Heading level={3}>
-                        Create team
+                        Trello data
                     </Heading>
                     <Form
                         value={value}
                         onChange={nextValue => {
-                            setValue(nextValue)
+                            setValue({
+                                ...value,
+                                ...nextValue
+                            })
                             setErrorMessage(undefined)
                         }
                         }
@@ -36,13 +40,35 @@ export function CreateTeam({onSubmit, setValue, value, errorMessage, setErrorMes
                             gap={"medium"}
                         >
                             <FormField
-                                label={'Name of team'}
-                                name={'name'}
+                                label={'Board id'}
+                                name={'board'}
                                 required={true}
                             >
                                 <TextInput
-                                    name={'name'}
-                                    type={'name'}
+                                    name={'board'}
+                                    type={'board'}
+                                    width={'large'}
+                                />
+                            </FormField>
+                            <FormField
+                                label={'Column name'}
+                                name={'nameList'}
+                                required={true}
+                            >
+                                <TextInput
+                                    name={'nameList'}
+                                    type={'nameList'}
+                                    width={'large'}
+                                />
+                            </FormField>
+                            <FormField
+                                label={'Token'}
+                                name={'token'}
+                                required={true}
+                            >
+                                <TextInput
+                                    name={'token'}
+                                    type={'token'}
                                     width={'large'}
                                 />
                             </FormField>
@@ -67,8 +93,8 @@ export function CreateTeam({onSubmit, setValue, value, errorMessage, setErrorMes
                                 <Button
                                     primary
                                     type={"submit"}
-                                    label={"Create"}
-                                    style={styles["create"]}
+                                    label={"Load"}
+                                    style={styles["focus"]}
                                 />
                             </Box>
                         </Box>

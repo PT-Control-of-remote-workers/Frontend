@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import {connect} from 'react-redux'
-import {authUser, regUser} from '../../../redux/reducers/user_reducer'
-import {useHistory} from 'react-router-dom'
+import {regUser} from '../../../redux/reducers/user_reducer'
 import SignUpForm from "./SignUpForm";
 
 function SignUpContainer({regUser}) {
@@ -18,16 +17,9 @@ function SignUpContainer({regUser}) {
     const [value, setValue] = useState(primaryValue)
     const [errorMessage, setErrorMessage] = useState(undefined)
 
-    const history = useHistory()
-
     async function registerSubmit() {
         try {
             await regUser(value)
-            await authUser({
-                username: value.username,
-                password: value.password
-            })
-            history.push('/main')
         } catch (err) {
             setErrorMessage(err.message)
         }

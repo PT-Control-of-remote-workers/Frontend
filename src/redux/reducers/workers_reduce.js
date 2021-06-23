@@ -253,6 +253,17 @@ export function loadWorkersFromServ(teamId) {
     }
 }
 
+export function loadWorkersSimpleFromServ(teamId) {
+    return async (dispatch, getState) => {
+        try {
+            const team = await getTeam(teamId, cookies.get('accessToken'))
+            dispatch(setSimpleTeamAC(team))
+        } catch (err) {
+            return Promise.reject(err)
+        }
+    }
+}
+
 export function makeLeaderWorker(teamAndWorker) {
     return async (dispatch, getState) => {
         try {

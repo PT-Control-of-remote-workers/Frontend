@@ -16,25 +16,25 @@ const UPDATE_TASK = 'TASK_UPDATE'
 const ADD_TASK = 'TASK_ADD_ALL'
 const ADD_TASKS = 'TASK_ADD_TASKS'
 
-const TASK_STAGES = {
+export const TASK_STAGES = {
     close: 'CLOSE',
     resume: 'RESUME',
     complete: 'COMPLETE'
 }
 
 const defaultState = {
-    tasks: {}
+    tasks: null
 }
 
 export default function tasksReducer(state = defaultState, action) {
     switch (action.type) {
         case(ADD_TASK): {
-            const newState ={}
-            newState.tasks = {...state.tasks}
-            newState.tasks[action.task.id] = action.task
             return {
                 ...state,
-                ...newState
+                tasks: {
+                    ...state.tasks,
+                    [action.task.id]: action.task
+                }
             }
         }
         case(ADD_TASKS): {
@@ -62,12 +62,12 @@ export default function tasksReducer(state = defaultState, action) {
             }
         }
         case(UPDATE_TASK): {
-            const newState ={}
-            newState.tasks = {...state.tasks}
-            newState.tasks[action.task.id] = action.task
             return {
                 ...state,
-                ...newState
+                tasks: {
+                    ...state.tasks,
+                    [action.task.id]: action.task
+                }
             }
         }
         default: {
@@ -91,28 +91,28 @@ function removeTaskAC(taskId) {
 }
 
 function setTasksAC(tasks) {
+    let mapTasks = {}
     if (tasks.length !== 0) {
-        tasks = tasks.reduce((sum = {}, act) => {
-            sum[act.id] = act
-            return sum;
-        })
-    } else {
-        tasks = {}
+        for (let i = 0; i < tasks.length; i++) {
+            let task = tasks[i]
+            mapTasks[task.id] = task
+        }
     }
     return {
         type: SET_TASKS,
-        tasks: tasks
+        tasks: mapTasks
     }
 }
 
 function addTasksAC(tasks) {
-    tasks = tasks.reduce((sum, act) => {
-        sum[act.id] = act
-        return sum;
-    })
+    const mapTasks = {}
+    for (let i = 0; i < tasks.length; i++) {
+        let task = tasks[i]
+        mapTasks[task.id] = task
+    }
     return {
         type: ADD_TASKS,
-        tasks: tasks
+        tasks: mapTasks
     }
 }
 
@@ -166,7 +166,7 @@ export function changeStageTaskOnServ(taskId, stage) {
                     throw new Error(`Unknown stage ${stage}`)
                 }
             }
-            dispatch(updateTask(response))
+            dispatch(updateTaskAC(response))
         } catch (err) {
             return Promise.reject(err)
         }

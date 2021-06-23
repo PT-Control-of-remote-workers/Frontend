@@ -93,6 +93,7 @@ export default function PreviewTasks({allTasks}) {
                 background={"white"}
                 pad={"medium"}
                 gap={"medium"}
+                height={{min: 'small'}}
             >
                 <Heading level={2}>
                     Preview tasks

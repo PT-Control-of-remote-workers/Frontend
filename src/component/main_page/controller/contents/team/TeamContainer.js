@@ -15,7 +15,7 @@ function TeamContainer({team, loadTeam, removeLeader, setLeader, removeWorker, s
     let match = useRouteMatch();
     const teamId = match.params.teamId;
 
-    const [hasData, setData] = useState(false)
+    const [hasData, setData] = useState(Boolean(team))
     const [errorMessage, setErrorMessage] = useState(undefined)
 
     const history = useHistory()

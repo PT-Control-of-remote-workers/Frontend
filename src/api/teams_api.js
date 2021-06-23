@@ -1,4 +1,5 @@
 import {workManagerRequest} from './api'
+import {getMessageFromError} from "../utils/errorHandler";
 
 export function createTeam(team, accessToken) {
     return workManagerRequest
@@ -9,11 +10,8 @@ export function createTeam(team, accessToken) {
         })
         .then(res => res.data)
         .catch(err => {
-            if (err.response) {
-                throw new Error(err.response.data.message)
-            } else {
-                throw err
-            }
+            const msg = getMessageFromError(err)
+            throw new Error(msg)
         })
 }
 
@@ -26,11 +24,8 @@ export function getTeam(teamId, accessToken) {
         })
         .then(res => res.data)
         .catch(err => {
-            if (err.response) {
-                throw new Error(err.response.data.message)
-            } else {
-                throw err
-            }
+            const msg = getMessageFromError(err)
+            throw new Error(msg)
         })
 }
 
@@ -43,11 +38,8 @@ export function getTeams(workerId, accessToken) {
         })
         .then(res => res.data)
         .catch(err => {
-            if (err.response) {
-                throw new Error(err.response.data.message)
-            } else {
-                throw err
-            }
+            const msg = getMessageFromError(err)
+            throw new Error(msg)
         })
 }
 
@@ -60,11 +52,8 @@ export function updateTeam(teamUpdate, accessToken) {
         })
         .then(res => res.data)
         .catch(err => {
-            if (err.response) {
-                throw new Error(err.response.data.message)
-            } else {
-                throw err
-            }
+            const msg = getMessageFromError(err)
+            throw new Error(msg)
         })
 }
 
@@ -77,11 +66,8 @@ export function addLeaderToTeam(teamAndUser, accessToken) {
         })
         .then(res => res.data)
         .catch(err => {
-            if (err.response) {
-                throw new Error(err.response.data.message)
-            } else {
-                throw err
-            }
+            const msg = getMessageFromError(err)
+            throw new Error(msg)
         })
 }
 
@@ -94,11 +80,8 @@ export function addWorkerToTeam(teamAndUser, accessToken) {
         })
         .then(res => res.data)
         .catch(err => {
-            if (err.response) {
-                throw new Error(err.response.data.message)
-            } else {
-                throw err
-            }
+            const msg = getMessageFromError(err)
+            throw new Error(msg)
         })
 }
 
@@ -111,11 +94,8 @@ export function removeLeaderToTeam(teamAndUser, accessToken) {
         })
         .then(res => res.data)
         .catch(err => {
-            if (err.response) {
-                throw new Error(err.response.data.message)
-            } else {
-                throw err
-            }
+            const msg = getMessageFromError(err)
+            throw new Error(msg)
         })
 }
 
@@ -128,11 +108,8 @@ export function removeWorkerToTeam(teamAndUser, accessToken) {
         })
         .then(res => res.data)
         .catch(err => {
-            if (err.response) {
-                throw new Error(err.response.data.message)
-            } else {
-                throw err
-            }
+            const msg = getMessageFromError(err)
+            throw new Error(msg)
         })
 }
 
@@ -145,11 +122,8 @@ export function setAdmin(teamAndUser, accessToken) {
         })
         .then(res => res.data)
         .catch(err => {
-            if (err.response) {
-                throw new Error(err.response.data.message)
-            } else {
-                throw err
-            }
+            const msg = getMessageFromError(err)
+            throw new Error(msg)
         })
 }
 
@@ -162,10 +136,7 @@ export function removeTeam(teamId, accessToken) {
         })
         .then(res => res.data)
         .catch(err => {
-            if (err.response) {
-                throw new Error(err.response.data.message)
-            } else {
-                throw err
-            }
+            const msg = getMessageFromError(err)
+            throw new Error(msg)
         })
 }

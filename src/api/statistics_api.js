@@ -1,18 +1,17 @@
 import {callsRequest} from './api'
+import {getMessageFromError} from "../utils/errorHandler";
 
 export function taskCalls(periodCalls, accessToken) {
     return callsRequest
-        .post('/api/v1/task-calls', periodCalls, {
+        .post('/api/v1/tasks-calls', periodCalls, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`
             }
         })
+        .then(res => res.data)
         .catch(err => {
-            if (err.response) {
-                throw new Error(err.response.data.message)
-            } else {
-                throw err
-            }
+            const msg = getMessageFromError(err)
+            throw new Error(msg)
         })
 }
 
@@ -23,12 +22,10 @@ export function teamCalls(periodCalls, accessToken) {
                 'Authorization': `Bearer ${accessToken}`
             }
         })
+        .then(res => res.data)
         .catch(err => {
-            if (err.response) {
-                throw new Error(err.response.data.message)
-            } else {
-                throw err
-            }
+            const msg = getMessageFromError(err)
+            throw new Error(msg)
         })
 }
 
@@ -39,11 +36,9 @@ export function workerCalls(periodCalls, accessToken) {
                 'Authorization': `Bearer ${accessToken}`
             }
         })
+        .then(res => res.data)
         .catch(err => {
-            if (err.response) {
-                throw new Error(err.response.data.message)
-            } else {
-                throw err
-            }
+            const msg = getMessageFromError(err)
+            throw new Error(msg)
         })
 }
