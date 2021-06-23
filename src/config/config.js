@@ -1,7 +1,7 @@
 const config = {
-    userServiceAddress: process.env.REACT_APP_REGISTRATION_ADDRESS,
-    statisticsServiceAddress: process.env.REACT_APP_STATISTICS_ADDRESS,
-    workManagerServiceAddress: process.env.REACT_APP_WORK_MANAGER_ADDRESS,
+    userServiceAddress: 'http:/35.205.198.209:8082',
+    statisticsServiceAddress: 'http://35.205.198.209:8080',
+    workManagerServiceAddress: 'http://35.205.198.209:8081',
 }
 
 export {config}
