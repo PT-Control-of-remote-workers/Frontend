@@ -1,31 +1,83 @@
 import {Cookies} from 'react-cookie'
-import {addLeaderToTeam, getTeam, removeLeaderToTeam, removeWorkerToTeam, setAdmin} from "../../api/teams_api";
+import {addLeaderToTeam, removeLeaderToTeam, removeWorkerToTeam, setAdmin} from "../../api/teams_api";
 import {getUser} from "../../api/user_api";
 import {selectTeam} from "../selectors/selectors";
 
 const SET_WORKERS = 'WORKERS_SET'
 const REMOVE_WORKER = 'WORKERS_REMOVE'
-const UPDATE_WORKER = 'WORKERS_UPDATE'
+const UPDATE_LEADER = 'WORKERS_UPDATE_LEADER'
+const UPDATE_ADMIN = 'WORKERS_UPDATE_ADMIN'
+const ADD_WORKER = 'WORKERS_ADD_WORKER'
+const SET_SIMPLE = 'WORKERS_SET_SIMPLE'
+const CLEAR = "WORKERS_CLEAR"
 
 const defaultState = {
-    team: null
+    team: null,
+    simpleTeam: null
 }
 
 export function workersReducer(state = defaultState, action) {
     switch (action.type) {
         case(SET_WORKERS): {
+            const newState = {
+                team: action.team
+            }
             return {
                 ...state,
-                team: {
-                    ...state.team,
-                    workers: action.workers
-                }
+                ...newState
             }
         }
         case(REMOVE_WORKER): {
             const newState = {}
-            newState.workers = {...state.workers}
+            newState.team = {...state.team}
             delete newState.workers[action.username]
+            return {
+                ...state,
+                ...newState
+            }
+        }
+        case (UPDATE_ADMIN): {
+            const newState = {...state}
+            newState.team.admin = action.team.admin
+            return {
+                ...state,
+                ...newState
+            }
+        }
+        case (UPDATE_LEADER): {
+            const newState = {...state}
+            newState.team.leaders = action.team.leaders
+            return {
+                ...state,
+                ...newState
+            }
+        }
+        case (ADD_WORKER): {
+            const newState = {...state}
+            const worker = action.worker
+            newState.team.workers[worker.username] = worker
+            return {
+                ...state,
+                ...newState
+            }
+        }
+        case (SET_SIMPLE): {
+            debugger
+            const newState = {...state}
+            newState.simpleTeam = action.team
+            const example = {
+                ...state,
+                ...newState
+            }
+            return {
+                ...state,
+                ...newState
+            }
+        }
+        case (CLEAR): {
+            const newState = {...state}
+            newState.simpleTeam = null
+            newState.team = null
             return {
                 ...state,
                 ...newState
@@ -37,6 +89,13 @@ export function workersReducer(state = defaultState, action) {
     }
 }
 
+function addWorkerAC(worker) {
+    return {
+        type: ADD_WORKER,
+        worker: worker
+    }
+}
+
 function removeWorkerAC(workerId) {
     return {
         type: REMOVE_WORKER,
@@ -44,25 +103,37 @@ function removeWorkerAC(workerId) {
     }
 }
 
-function setWorkersAC(workers) {
-    if (workers.length !== 0) {
-        workers = workers.reduce((sum = {}, act) => {
-            sum[act.username] = act
-            return sum;
-        })
-    } else {
-        workers = {}
-    }
+function setWorkersAC(team) {
     return {
         type: SET_WORKERS,
-        workers: workers
+        team: team
     }
 }
 
-function updateWorkerAC(worker) {
+function updateAdminAC(team) {
     return {
-        type: UPDATE_WORKER,
-        workers: worker
+        type: UPDATE_ADMIN,
+        team: team
+    }
+}
+
+function updateLeaderAC(team) {
+    return {
+        type: UPDATE_LEADER,
+        team: team
+    }
+}
+
+export function setSimpleTeamAC(team) {
+    return {
+        type: SET_SIMPLE,
+        team: team
+    }
+}
+
+export function clearTeamAC() {
+    return {
+        type: CLEAR
     }
 }
 
@@ -85,6 +156,23 @@ function convertWorker(workerId, team) {
     }
 }
 
+export function addWorker(workerId) {
+    return async (dispatch, getState) => {
+        try {
+            const cookies = new Cookies()
+            const team = selectTeam(getState())
+            await addWorker({
+                id: team.id,
+                username: workerId
+            })
+            dispatch(addWorkerAC(convertWorker(workerId, team)))
+            return Promise.resolve()
+        } catch (err) {
+            return Promise.reject(err)
+        }
+    }
+}
+
 export function loadWorkersFromServ(teamId) {
     return async (dispatch, getState) => {
         try {
@@ -94,7 +182,8 @@ export function loadWorkersFromServ(teamId) {
                 sum[act] = convertWorker(act, team)
                 return sum
             })
-            dispatch(setWorkersAC(workers))
+            team.workers = workers
+            dispatch(setWorkersAC(team))
             return Promise.resolve()
         } catch (err) {
             return Promise.reject(err)
@@ -106,9 +195,8 @@ export function makeLeaderWorker(teamAndWorker) {
     return async (dispatch, getState) => {
         try {
             const cookies = new Cookies()
-            await addLeaderToTeam(teamAndWorker, cookies.get('accessToken'))
-            const user = convertWorker(teamAndWorker.userId, selectTeam(getState()))
-            dispatch(updateWorkerAC(user))
+            const team = await addLeaderToTeam(teamAndWorker, cookies.get('accessToken'))
+            dispatch(updateLeaderAC(team))
             return Promise.resolve()
         } catch (err) {
             return Promise.reject(err)
@@ -120,9 +208,8 @@ export function setAdminTeam(teamAndWorker) {
     return async (dispatch, getState) => {
         try {
             const cookies = new Cookies()
-            await setAdmin(teamAndWorker, cookies.get('accessToken'))
-            const user = convertWorker(teamAndWorker.userId, selectTeam(getState()))
-            dispatch(updateWorkerAC(user))
+            const team = await setAdmin(teamAndWorker, cookies.get('accessToken'))
+            dispatch(updateAdminAC(team))
             return Promise.resolve()
         } catch (err) {
             return Promise.reject(err)
@@ -134,9 +221,8 @@ export function removeLeaderTeam(teamAndWorker) {
     return async (dispatch, getState) => {
         try {
             const cookies = new Cookies()
-            await removeLeaderToTeam(teamAndWorker, cookies.get('accessToken'))
-            const user = convertWorker(teamAndWorker.userId, selectTeam(getState()))
-            dispatch(updateWorkerAC(user))
+            const team = await removeLeaderToTeam(teamAndWorker, cookies.get('accessToken'))
+            dispatch(updateAdminAC(team))
             return Promise.resolve()
         } catch (err) {
             return Promise.reject(err)

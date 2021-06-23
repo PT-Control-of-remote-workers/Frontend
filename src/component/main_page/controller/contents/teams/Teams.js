@@ -1,9 +1,7 @@
-import {Box, Grid, Heading, InfiniteScroll, Table, TableBody, TableCell, TableHeader, TableRow} from "grommet";
+import {Box, Grid, Heading, Table, TableBody, TableCell, TableHeader, TableRow} from "grommet";
 import React, {useState} from "react";
 import AppBtn from "../../../../util/AppBtn";
 import {AppDropBtn} from "../../../../util/AppDropBtn";
-import {CreateTeam} from "./CreateTeam";
-import {EditTeam} from "./EditTeam";
 import {InviteWorker} from "./InviteWorker";
 import CreateTeamContainer from "./CreateTeamContainer";
 import EditTeamContainer from "./EditTeamContainer";
@@ -172,7 +170,7 @@ function actions({team, status, choose, leave, remove}) {
         >
             <AppBtn
                 name={"Choose"}
-                action={() => choose(team.id)}
+                action={() => choose(team)}
                 type={"focus"}
             />
             {(status === 'admin' || status === 'leader') &&

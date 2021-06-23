@@ -6,6 +6,10 @@ export function selectTeam(state) {
     return state.team.team
 }
 
+export function selectSimpleTeam(state) {
+    return state.team.simpleTeam
+}
+
 export function selectTeams(state) {
     return state.teams.teams
 }

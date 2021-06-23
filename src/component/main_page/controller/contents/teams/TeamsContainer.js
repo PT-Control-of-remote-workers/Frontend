@@ -8,8 +8,8 @@ import {
     removeWorkerFromTeam
 } from "../../../../../redux/reducers/teams_reducer";
 import {getUsernameFromCookie} from "../../../../../utils/cookiesUtils";
-import {loadTeamFromServ} from "../../../../../redux/reducers/team_reducer";
 import Teams from "./Teams";
+import {setSimpleTeamAC} from "../../../../../redux/reducers/workers_reduce";
 
 function TeamsContainer({teams, loadTeams, removeWorker, removeTeam, chooseTeam}) {
     const username = getUsernameFromCookie()
@@ -33,8 +33,8 @@ function TeamsContainer({teams, loadTeams, removeWorker, removeTeam, chooseTeam}
         })
     }
 
-    function choose(id) {
-        chooseTeam(id)
+    function choose(team) {
+        chooseTeam(team)
     }
 
     return (
@@ -68,5 +68,5 @@ export default connect(mapStateToProps, {
     loadTeams: loadTeamsFromServ,
     removeWorker: removeWorkerFromTeam,
     removeTeam: removeTeamFromServ,
-    chooseTeam: loadTeamFromServ,
+    chooseTeam: setSimpleTeamAC,
 })(TeamsContainer)

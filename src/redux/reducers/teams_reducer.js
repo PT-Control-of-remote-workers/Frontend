@@ -1,5 +1,7 @@
 import {createTeam, getTeams, removeTeam, removeWorkerToTeam, updateTeam} from "../../api/teams_api";
 import {Cookies} from 'react-cookie'
+import {selectSimpleTeam} from "../selectors/selectors";
+import {clearTeamAC, setSimpleTeamAC} from "./workers_reduce";
 
 const SET_TEAMS = 'TEAMS_SET'
 const REMOVE_TEAM = 'TEAMS_REMOVE'
@@ -106,6 +108,10 @@ export function updateTeamOnServ(team) {
             const cookies = new Cookies()
             const response = await updateTeam(team, cookies.get('accessToken'))
             dispatch(updateTeamAC(response))
+            const selectedTeam = selectSimpleTeam(getState())
+            if (selectedTeam && selectedTeam.id === team.id) {
+                dispatch(setSimpleTeamAC(team))
+            }
             return Promise.resolve()
         } catch (err) {
             return Promise.reject(err)
@@ -132,6 +138,10 @@ export function removeTeamFromServ(teamId) {
             const cookies = new Cookies()
             await removeTeam(teamId, cookies.get('accessToken'))
             dispatch(removeTeamAC(teamId))
+            const team = selectSimpleTeam(getState())
+            if (team && team.id === teamId) {
+                dispatch(clearTeamAC())
+            }
             return Promise.resolve()
         } catch (err) {
             return Promise.reject(err)
@@ -145,6 +155,10 @@ export function removeWorkerFromTeam(teamAndUsername) {
             const cookies = new Cookies()
             await removeWorkerToTeam(teamAndUsername, cookies.get('accessToken'))
             dispatch(removeTeamAC(teamAndUsername.id))
+            const team = selectSimpleTeam(getState())
+            if (team && team.id === teamAndUsername.id) {
+                dispatch(clearTeamAC())
+            }
             return Promise.resolve()
         } catch (err) {
             return Promise.reject(err)
