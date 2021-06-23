@@ -2,7 +2,7 @@ import {Box, Grid, Heading, Table, TableBody, TableCell, TableHeader, TableRow} 
 import React, {useState} from "react";
 import AppBtn from "../../../../util/AppBtn";
 import {AppDropBtn} from "../../../../util/AppDropBtn";
-import {InviteWorker} from "./InviteWorker";
+import {InviteWorker} from "../team/invite/InviteWorker";
 import CreateTeamContainer from "./CreateTeamContainer";
 import EditTeamContainer from "./EditTeamContainer";
 
@@ -173,13 +173,13 @@ function actions({team, status, choose, leave, remove}) {
                 action={() => choose(team)}
                 type={"focus"}
             />
-            {(status === 'admin' || status === 'leader') &&
-            <AppBtn
-                name={"Invite"}
-                action={() => (InviteWorker)}
-                type={"update"}
-            />
-            }
+            {/*{(status === 'admin' || status === 'leader') &&*/}
+            {/*<AppBtn*/}
+            {/*    name={"Invite"}*/}
+            {/*    action={() => (InviteWorker)}*/}
+            {/*    type={"update"}*/}
+            {/*/>*/}
+            {/*}*/}
             {status === 'admin' &&
             <EditTeamContainer team={team}/>
             }

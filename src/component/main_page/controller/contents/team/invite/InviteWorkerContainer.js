@@ -1,10 +1,10 @@
-import {EditTeam} from "./EditTeam";
+import {EditTeam} from "../../teams/EditTeam";
 
 import React, {useState} from "react";
 import {connect} from "react-redux";
-import {createTeamOnServ, updateTeamOnServ} from "../../../../../redux/reducers/teams_reducer";
-import {getUsernameFromCookie} from "../../../../../utils/cookiesUtils";
-import {addWorkerToTeam} from "../../../../../api/teams_api";
+import {createTeamOnServ, updateTeamOnServ} from "../../../../../../redux/reducers/teams_reducer";
+import {getUsernameFromCookie} from "../../../../../../utils/cookiesUtils";
+import {addWorkerToTeam} from "../../../../../../api/teams_api";
 
 function InviteWorkerContainer({team, editTeam}) {
     const primaryValue = {
