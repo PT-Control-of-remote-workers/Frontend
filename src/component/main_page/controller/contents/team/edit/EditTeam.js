@@ -1,6 +1,7 @@
 import {Box, Button, Form, FormField, Heading, Layer, Text, TextInput} from "grommet";
 import React from "react";
-import AppBtn from "../../../../util/AppBtn";
+import AppBtn from "../../../../../util/AppBtn";
+import {styles} from "../../../../../util/styles";
 
 export function EditTeam({team, onSubmit, setValue, value, errorMessage, setErrorMessage, isOpen, onOpen, onClose}) {
     return (
@@ -70,12 +71,7 @@ export function EditTeam({team, onSubmit, setValue, value, errorMessage, setErro
                                     primary
                                     type={"submit"}
                                     label={"Update"}
-                                    style={{
-                                        'color': "white",
-                                        'text-align': "center",
-                                        'width': '100%',
-                                        'background-color': "#11D600",
-                                    }}
+                                    style={styles['create']}
                                 />
                             </Box>
                         </Box>

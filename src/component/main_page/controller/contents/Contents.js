@@ -10,15 +10,15 @@ import {
     useRouteMatch,
     useParams
 } from "react-router-dom";
+import TeamContainer from "./team/TeamContainer";
 
 export function Contents() {
     return (
         <Box
+            fill
             gridArea="content"
             align={"center"}
             background={"back"}
-            width={"100%"}
-            height={"100%"}
             direction={"column"}
             pad={"small"}
             overflow={"scroll"}
@@ -29,10 +29,16 @@ export function Contents() {
     )
 }
 
-function SwitchContent(content) {
+function SwitchContent() {
     let match = useRouteMatch();
     return (
         <Switch>
+            <Route
+                path={`${match.path}/teams/:teamId`}
+                exact={true}
+            >
+                <TeamContainer/>
+            </Route>
             <Route
                 path={`${match.path}/teams`}
                 exact={true}

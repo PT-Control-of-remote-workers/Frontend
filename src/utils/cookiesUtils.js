@@ -43,7 +43,7 @@ export function setTokensCookies(access, accessTimeout, refreshTimeout, username
         if(username) {
             cookies.set(
                 'username',
-                username
+                username.toLowerCase()
             )
         }
     } else {

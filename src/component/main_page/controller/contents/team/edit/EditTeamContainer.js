@@ -2,8 +2,9 @@ import {EditTeam} from "./EditTeam";
 
 import React, {useState} from "react";
 import {connect} from "react-redux";
-import {createTeamOnServ, updateTeamOnServ} from "../../../../../redux/reducers/teams_reducer";
-import {getUsernameFromCookie} from "../../../../../utils/cookiesUtils";
+import {getUsernameFromCookie} from "../../../../../../utils/cookiesUtils";
+import {selectTeam} from "../../../../../../redux/selectors/selectors";
+import {updateTeamOnServ} from "../../../../../../redux/reducers/workers_reduce";
 
 function EditTeamContainer({team, editTeam}) {
     const primaryValue = {
@@ -23,7 +24,6 @@ function EditTeamContainer({team, editTeam}) {
 
     function onSubmit() {
         try {
-            const username = getUsernameFromCookie()
             editTeam({
                 ...value,
                 id: team.id
@@ -50,7 +50,7 @@ function EditTeamContainer({team, editTeam}) {
 }
 
 const mapStateToProps = (state) => ({
-
+    team: selectTeam(state)
 })
 
 export default connect(mapStateToProps, {

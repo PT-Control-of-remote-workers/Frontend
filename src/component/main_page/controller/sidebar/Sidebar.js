@@ -3,7 +3,7 @@ import React from "react";
 import AppBtn from "../../../util/AppBtn";
 import {useHistory} from "react-router-dom";
 
-export default function Sidebar({team, isTeamSelect}) {
+export default function Sidebar({team, isTeamSelect, errorMessage, setErrorMessage}) {
     const history = useHistory()
     let teamName
     if (team) {
@@ -29,7 +29,10 @@ export default function Sidebar({team, isTeamSelect}) {
                 action={() => {
                     if (isTeamSelect) {
                         history.push(`/main/teams/${team.id}`)
+                    } else {
+                        history.push(`/main/teams`)
                     }
+                    setErrorMessage(undefined)
                 }}
             />
 
@@ -38,6 +41,7 @@ export default function Sidebar({team, isTeamSelect}) {
                 type="action"
                 action={() => {
                     history.push(`/main`)
+                    setErrorMessage(undefined)
                 }}
             />
 
@@ -46,6 +50,7 @@ export default function Sidebar({team, isTeamSelect}) {
                 type="action"
                 action={() => {
                     history.push(`/main/teams`)
+                    setErrorMessage(undefined)
                 }}
             />
 
@@ -53,7 +58,12 @@ export default function Sidebar({team, isTeamSelect}) {
                 name="Members"
                 type="action"
                 action={() => {
-                    history.push(`/main/teams/${team.id}`)
+                    if (isTeamSelect) {
+                        history.push(`/main/teams/${team.id}`)
+                        setErrorMessage(undefined)
+                    } else {
+                        setErrorMessage("Select team")
+                    }
                 }}
             />
 
@@ -61,9 +71,28 @@ export default function Sidebar({team, isTeamSelect}) {
                 name="Tasks"
                 type="action"
                 action={() => {
-                    history.push(`/main/teams/${team.id}/tasks`)
+                    if (isTeamSelect) {
+                        history.push(`/main/teams/${team.id}/tasks`)
+                        setErrorMessage(undefined)
+                    } else {
+                        setErrorMessage("Select team")
+                    }
                 }}
             />
+            {errorMessage !== undefined &&
+            <Box
+                align={'center'}
+                margin={{vertical: 'small'}}
+            >
+                <Text
+                    color={'status-critical'}
+                    size={'large'}
+                    weight={'bold'}
+                >
+                    {errorMessage}
+                </Text>
+            </Box>
+            }
         </Box>
     )
 }

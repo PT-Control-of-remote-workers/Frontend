@@ -75,6 +75,7 @@ export function authUser(userReg) {
     return async dispatch => {
         try {
             const result = await auth(userReg)
+            deleteTokensCookies()
             setTokensCookies(
                 result.accessToken,
                 result.accessTokenTimeout,

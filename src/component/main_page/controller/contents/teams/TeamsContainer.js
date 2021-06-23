@@ -10,6 +10,7 @@ import {
 import {getUsernameFromCookie} from "../../../../../utils/cookiesUtils";
 import Teams from "./Teams";
 import {setSimpleTeamAC} from "../../../../../redux/reducers/workers_reduce";
+import {useHistory} from "react-router-dom";
 
 function TeamsContainer({teams, loadTeams, removeWorker, removeTeam, chooseTeam}) {
     const username = getUsernameFromCookie()
@@ -22,18 +23,18 @@ function TeamsContainer({teams, loadTeams, removeWorker, removeTeam, chooseTeam}
         }
     })
 
-    function remove(id) {
+    async function remove(id) {
         removeTeam(id)
     }
 
-    function leave(id) {
+    async function leave(id) {
         removeWorker({
             id: id,
             userId: username
         })
     }
 
-    function choose(team) {
+    async function choose(team) {
         chooseTeam(team)
     }
 

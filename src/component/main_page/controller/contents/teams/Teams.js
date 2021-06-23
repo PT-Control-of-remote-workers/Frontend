@@ -4,7 +4,8 @@ import AppBtn from "../../../../util/AppBtn";
 import {AppDropBtn} from "../../../../util/AppDropBtn";
 import {InviteWorker} from "../team/invite/InviteWorker";
 import CreateTeamContainer from "./CreateTeamContainer";
-import EditTeamContainer from "./EditTeamContainer";
+import EditTeamContainer from "../team/edit/EditTeamContainer";
+import {useHistory} from "react-router-dom";
 
 export default function Teams({username, allTeams, choose, leave, remove}) {
     if (allTeams == null) {
@@ -26,7 +27,7 @@ export default function Teams({username, allTeams, choose, leave, remove}) {
 
         return (
             <Box
-                height={"80%"}
+
                 width={"90%"}
                 round={"medium"}
                 background={"white"}
@@ -47,8 +48,7 @@ export default function Teams({username, allTeams, choose, leave, remove}) {
                     <CreateTeamContainer/>
                 </Box>
                 <Box
-                    fill
-                    overflow={"scroll"}
+                    overflow={"auto"}
                 >
                     <Grid
                         style={{
@@ -72,6 +72,7 @@ export default function Teams({username, allTeams, choose, leave, remove}) {
                                     <TableCell scope="col" border="bottom">
                                         Your status
                                     </TableCell>
+
                                     <TableCell scope="col" border="bottom" align={"right"} margin={{right: "large"}}>
                                         Actions
                                     </TableCell>
@@ -90,13 +91,13 @@ export default function Teams({username, allTeams, choose, leave, remove}) {
                                                     <AppDropBtn
                                                         label={"Actions"}
                                                         type={"action"}
-                                                        innerContent={actions({
-                                                            team: team,
-                                                            status: status,
-                                                            choose: choose,
-                                                            leave: leave,
-                                                            remove: remove,
-                                                        })}
+                                                        innerContent={<Actions
+                                                            team={team}
+                                                            status={status}
+                                                            leave={leave}
+                                                            choose={choose}
+                                                            remove={remove}
+                                                        />}
                                                     />
                                                 </TableCell>
                                             </TableRow>
@@ -160,7 +161,10 @@ function getStatus(team, username) {
     return 'worker'
 }
 
-function actions({team, status, choose, leave, remove}) {
+function Actions({team, status, choose, leave, remove}) {
+
+    const history = useHistory()
+
     return (
         <Box
             pad="small"
@@ -180,8 +184,12 @@ function actions({team, status, choose, leave, remove}) {
             {/*    type={"update"}*/}
             {/*/>*/}
             {/*}*/}
-            {status === 'admin' &&
-            <EditTeamContainer team={team}/>
+            {(status === 'admin' || status === 'leader') &&
+            <AppBtn
+                name={"Edit"}
+                action={() => history.push(`/main/teams/${team.id}`)}
+                type={"update"}
+            />
             }
             <AppBtn
                 name={"Leave"}

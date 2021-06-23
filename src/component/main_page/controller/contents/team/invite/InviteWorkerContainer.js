@@ -1,12 +1,10 @@
-import {EditTeam} from "../../teams/EditTeam";
-
 import React, {useState} from "react";
 import {connect} from "react-redux";
-import {createTeamOnServ, updateTeamOnServ} from "../../../../../../redux/reducers/teams_reducer";
-import {getUsernameFromCookie} from "../../../../../../utils/cookiesUtils";
-import {addWorkerToTeam} from "../../../../../../api/teams_api";
+import {selectTeam} from "../../../../../../redux/selectors/selectors";
+import {InviteWorker} from "./InviteWorker";
+import {addWorker} from "../../../../../../redux/reducers/workers_reduce";
 
-function InviteWorkerContainer({team, editTeam}) {
+function InviteWorkerContainer({team, addWorker}) {
     const primaryValue = {
         name: team.name,
     }
@@ -22,13 +20,9 @@ function InviteWorkerContainer({team, editTeam}) {
 
     const onClose = () => setOpen(undefined);
 
-    function onSubmit() {
+    async function onSubmit() {
         try {
-            const username = getUsernameFromCookie()
-            editTeam({
-                ...value,
-                id: team.id
-            })
+            addWorker(value.username)
             onClose()
         } catch (err) {
             setErrorMessage(err.message)
@@ -36,7 +30,7 @@ function InviteWorkerContainer({team, editTeam}) {
     }
 
     return (
-        <EditTeam
+        <InviteWorker
             team={team}
             onSubmit={onSubmit}
             setValue={setValue}
@@ -51,9 +45,9 @@ function InviteWorkerContainer({team, editTeam}) {
 }
 
 const mapStateToProps = (state) => ({
-
+    team: selectTeam(state)
 })
 
 export default connect(mapStateToProps, {
-    editTeam: addWorkerToTeam
+    addWorker
 })(InviteWorkerContainer)

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {selectTeams, selectUserData} from "../../../../../../redux/selectors/selectors";
 import {connect} from "react-redux";
-import {createTeamOnServ, loadTeamsFromServ} from "../../../../../../redux/reducers/teams_reducer";
+import {loadTeamsFromServ} from "../../../../../../redux/reducers/teams_reducer";
 import PreviewTeams from "./PreviewTeams";
 import {getUsernameFromCookie} from "../../../../../../utils/cookiesUtils";
 
@@ -39,5 +39,4 @@ function mapStateToProps(state) {
 
 export default connect(mapStateToProps, {
     loadTeamsFromServ,
-    createTeamOnServ,
 })(PreviewTeamsContainer)

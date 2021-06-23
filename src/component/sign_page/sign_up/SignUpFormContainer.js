@@ -27,7 +27,7 @@ function SignUpContainer({regUser}) {
                 username: value.username,
                 password: value.password
             })
-            history.push('/index')
+            history.push('/main')
         } catch (err) {
             setErrorMessage(err.message)
         }

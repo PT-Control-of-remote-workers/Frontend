@@ -1,4 +1,4 @@
-import {Cookies} from 'react-cookie'
+import {cookies} from '../../utils/cookiesUtils'
 import {teamCalls} from "../../api/statistics_api";
 import {getStatisticOfTask} from "./team_calls_reduce";
 
@@ -35,7 +35,6 @@ function setCallsAC(calls, statistic) {
 export function loadStatisticTaskFromServ(periodCalls) {
     return async (dispatch, getState) => {
         try {
-            const cookies = new Cookies()
             const calls = await teamCalls(periodCalls, cookies.get('accessToken'))
 
             const statistic = getStatisticOfTask(calls, 10)

@@ -1,4 +1,4 @@
-import {Cookies} from 'react-cookie'
+import {cookies} from '../../utils/cookiesUtils'
 import {getTeam} from "../../api/teams_api";
 import {
     resumeTask,
@@ -126,10 +126,8 @@ function updateTaskAC(task) {
 export function loadTasksFromServ(teamId) {
     return async (dispatch, getState) => {
         try {
-            const cookies = new Cookies()
             const response = await getTeam(teamId, cookies.get('accessToken'))
             dispatch(setTasksAC(response.tasks))
-            return Promise.resolve()
         } catch (err) {
             return Promise.reject(err)
         }
@@ -139,10 +137,8 @@ export function loadTasksFromServ(teamId) {
 export function loadTasksFromTrello(trello) {
     return async (dispatch, getState) => {
         try {
-            const cookies = new Cookies()
             const response = await importTrello(trello, cookies.get('accessToken'))
             dispatch(addTasksAC(response))
-            return Promise.resolve()
         } catch (err) {
             return Promise.reject(err)
         }
@@ -152,7 +148,6 @@ export function loadTasksFromTrello(trello) {
 export function changeStageTaskOnServ(taskId, stage) {
     return async (dispatch, getState) => {
         try {
-            const cookies = new Cookies()
             let response
             switch (stage) {
                 case(TASK_STAGES.close): {
@@ -172,7 +167,6 @@ export function changeStageTaskOnServ(taskId, stage) {
                 }
             }
             dispatch(updateTask(response))
-            return Promise.resolve()
         } catch (err) {
             return Promise.reject(err)
         }
@@ -182,10 +176,8 @@ export function changeStageTaskOnServ(taskId, stage) {
 export function setWorkerOnTask(workerId) {
     return async (dispatch, getState) => {
         try {
-            const cookies = new Cookies()
             const response = await setWorker(workerId, cookies.get('accessToken'))
             dispatch(updateTaskAC(response))
-            return Promise.resolve()
         } catch (err) {
             return Promise.reject(err)
         }
@@ -195,10 +187,8 @@ export function setWorkerOnTask(workerId) {
 export function updateTaskOnServ(task) {
     return async (dispatch, getState) => {
         try {
-            const cookies = new Cookies()
             const response = await updateTask(task, cookies.get('accessToken'))
             dispatch(updateTaskAC(response))
-            return Promise.resolve()
         } catch (err) {
             return Promise.reject(err)
         }
@@ -208,10 +198,8 @@ export function updateTaskOnServ(task) {
 export function createTaskOnServ(task) {
     return async (dispatch, getState) => {
         try {
-            const cookies = new Cookies()
             const response = await createTask(task, cookies.get('accessToken'))
             dispatch(addTaskAC(response))
-            return Promise.resolve()
         } catch (err) {
             return Promise.reject(err)
         }
@@ -221,10 +209,8 @@ export function createTaskOnServ(task) {
 export function removeTaskFromServ(taskId) {
     return async (dispatch, getState) => {
         try {
-            const cookies = new Cookies()
             await removeTask(taskId, cookies.get('accessToken'))
             dispatch(removeTaskAC(taskId))
-            return Promise.resolve()
         } catch (err) {
             return Promise.reject(err)
         }

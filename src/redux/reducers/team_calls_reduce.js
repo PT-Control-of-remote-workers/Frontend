@@ -1,4 +1,4 @@
-import {Cookies} from 'react-cookie'
+import {cookies} from '../../utils/cookiesUtils'
 import {teamCalls} from "../../api/statistics_api";
 
 const SET_CALLS = 'TEAM_CALLS_SET'
@@ -34,7 +34,6 @@ function setCallsAC(calls, statistics) {
 export function loadStatisticTeamFromServ(periodCalls) {
     return async (dispatch, getState) => {
         try {
-            const cookies = new Cookies()
             const response = await teamCalls(periodCalls, cookies.get('accessToken'))
 
             const statistics = {}
@@ -51,7 +50,6 @@ export function loadStatisticTeamFromServ(periodCalls) {
             }
 
             dispatch(setCallsAC(calls, statistics))
-            return Promise.resolve()
         } catch (err) {
             return Promise.reject(err)
         }
