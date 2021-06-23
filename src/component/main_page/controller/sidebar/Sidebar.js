@@ -1,8 +1,16 @@
 import {Box, Grid, Text} from "grommet";
 import React from "react";
 import AppBtn from "../../../util/AppBtn";
+import {useHistory} from "react-router-dom";
 
-export default function Sidebar({setContent, teamName, isTeamSelect}) {
+export default function Sidebar({team, isTeamSelect}) {
+    const history = useHistory()
+    let teamName
+    if (team) {
+        teamName = team.name
+    } else {
+        teamName = "Select team"
+    }
 
     return (
         <Box
@@ -20,9 +28,7 @@ export default function Sidebar({setContent, teamName, isTeamSelect}) {
                 type="action"
                 action={() => {
                     if (isTeamSelect) {
-                        setContent({
-                            type: "team"
-                        })
+                        history.push(`/main/teams/${team.id}`)
                     }
                 }}
             />
@@ -31,9 +37,7 @@ export default function Sidebar({setContent, teamName, isTeamSelect}) {
                 name="Main"
                 type="action"
                 action={() => {
-                    setContent({
-                        type: "preview"
-                    })
+                    history.push(`/main`)
                 }}
             />
 
@@ -41,9 +45,7 @@ export default function Sidebar({setContent, teamName, isTeamSelect}) {
                 name="Teams"
                 type="action"
                 action={() => {
-                    setContent({
-                        type: "teams"
-                    })
+                    history.push(`/main/teams`)
                 }}
             />
 
@@ -51,9 +53,7 @@ export default function Sidebar({setContent, teamName, isTeamSelect}) {
                 name="Members"
                 type="action"
                 action={() => {
-                    setContent({
-                        type: "members"
-                    })
+                    history.push(`/main/teams/${team.id}`)
                 }}
             />
 
@@ -61,9 +61,7 @@ export default function Sidebar({setContent, teamName, isTeamSelect}) {
                 name="Tasks"
                 type="action"
                 action={() => {
-                    setContent({
-                        type: "tasks"
-                    })
+                    history.push(`/main/teams/${team.id}/tasks`)
                 }}
             />
         </Box>

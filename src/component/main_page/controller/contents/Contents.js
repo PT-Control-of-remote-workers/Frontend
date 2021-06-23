@@ -2,8 +2,16 @@ import {Box} from "grommet";
 import React from "react";
 import {PreviewContent} from "./preview/PreviewContent";
 import TeamsContainer from "./teams/TeamsContainer";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    useRouteMatch,
+    useParams
+} from "react-router-dom";
 
-export function Contents({content}) {
+export function Contents() {
     return (
         <Box
             gridArea="content"
@@ -15,26 +23,28 @@ export function Contents({content}) {
             pad={"small"}
             overflow={"scroll"}
         >
-            {switchContent(content)}
+
+            <SwitchContent />
         </Box>
     )
 }
 
-function switchContent(content) {
-    switch (content.type) {
-        case "preview":
-            return (
-                <PreviewContent/>
-
-            )
-        case "teams":
-            return (
+function SwitchContent(content) {
+    let match = useRouteMatch();
+    return (
+        <Switch>
+            <Route
+                path={`${match.path}/teams`}
+                exact={true}
+            >
                 <TeamsContainer/>
-            )
-        default:
-            return (
-                <>
-                </>
-            )
-    }
+            </Route>
+            <Route
+                path={match.url}
+                exact={true}
+            >
+                <PreviewContent/>
+            </Route>
+        </Switch>
+    )
 }

@@ -5,13 +5,6 @@ import {Contents} from "./contents/Contents";
 import SidebarContainer from "./sidebar/SidebarConteiner";
 
 export function Controller() {
-
-    const defaultContent = {
-        type: "preview"
-    }
-
-    const [content, setContent] = useState(defaultContent)
-
     return (
         <Box>
 
@@ -23,12 +16,8 @@ export function Controller() {
                 ['sidebar', 'content'],
             ]}
         >
-            <SidebarContainer
-                setContent={setContent}
-            />
-            <Contents
-                content={content}
-            />
+            <SidebarContainer/>
+            <Contents/>
         </Grid>
         </Box>
     )

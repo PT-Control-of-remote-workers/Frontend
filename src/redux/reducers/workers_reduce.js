@@ -62,7 +62,6 @@ export function workersReducer(state = defaultState, action) {
             }
         }
         case (SET_SIMPLE): {
-            debugger
             const newState = {...state}
             newState.simpleTeam = action.team
             const example = {

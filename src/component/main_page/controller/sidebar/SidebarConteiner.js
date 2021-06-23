@@ -3,18 +3,10 @@ import {connect} from "react-redux";
 import Sidebar from "./Sidebar";
 import React from "react";
 
-function SidebarContainer({setContent, curTeam}) {
-    let teamName
-    if (curTeam) {
-        teamName = curTeam.name
-    } else {
-        teamName = "Select team"
-    }
-
+function SidebarContainer({curTeam}) {
     return (
         <Sidebar
-            teamName={teamName}
-            setContent={setContent}
+            team={curTeam}
             isTeamSelect={curTeam}
         />
     )
