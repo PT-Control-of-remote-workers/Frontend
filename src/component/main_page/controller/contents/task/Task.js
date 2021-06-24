@@ -1,16 +1,12 @@
 import {Box, Grid, Heading, Table, TableBody, TableCell, TableHeader, TableRow, Text} from "grommet";
-import CreateTeamContainer from "../teams/CreateTeamContainer";
-import {AppDropBtn} from "../../../../util/AppDropBtn";
-import {useHistory} from "react-router-dom";
-import AppBtn from "../../../../util/AppBtn";
-import React from "react";
-import InviteWorkerContainer from "./invite/InviteWorkerContainer";
-import EditTeamContainer from "./edit/EditTeamContainer";
-import {getUsernameFromCookie} from "../../../../../utils/cookiesUtils";
 import {styles} from "../../../../util/styles";
+import {getUsernameFromCookie} from "../../../../../utils/cookiesUtils";
+import React from "react";
+import EditTaskContainer from "./edit/EditTaskContainer";
+import AppBtn from "../../../../util/AppBtn";
 
-export function Team({team, toTasks, makeLeader, makeWorker, setAdmin, removeWorker, removeTeam, errorMessage, setErrorMessage}) {
-    if (team == null) {
+export function Task({team, task, stats, calls, workers, resume, finish, complete, remove, view, errorMessage, setErrorMessage}) {
+    if (task == null || workers == null) {
         return (
             <Box
                 width={"90%"}
@@ -27,7 +23,7 @@ export function Team({team, toTasks, makeLeader, makeWorker, setAdmin, removeWor
                     direction={"row"}
                 >
                     <Heading level={2}>
-                        Team name
+                        Task
                     </Heading>
                     <Box
                         direction={"row"}
@@ -67,48 +63,18 @@ export function Team({team, toTasks, makeLeader, makeWorker, setAdmin, removeWor
                         <Heading level={3}>
                             Loading
                         </Heading>
-                        <Box
-                            direction={"row"}
-                            gap={"small"}
-                        >
-                        </Box>
                     </Box>
                 </Box>
             </Box>
         )
     }
 
-    const sortOnStatus = (w1, w2) => {
-        let role = getStatus(team, w1.username)
-        let status;
-        if (role === 'admin') {
-            status = 3
-        } else if (role === 'leader') {
-            status = 2
-        } else {
-            status = 1
-        }
-
-        role = getStatus(team, w2.username)
-        if (role === 'admin') {
-            return -status + 3
-        } else if (role === 'leader') {
-            return -(status - 2)
-        } else {
-            return -status + 1
-        }
-    }
-
-    let workers = Object.values(team.workers)
-    workers = workers.sort(sortOnStatus)
-
     const username = getUsernameFromCookie()
     const status = getStatus(team, username)
 
-
     return (
         <Box
-
+            height={"100%"}
             width={"90%"}
             round={"medium"}
             background={"white"}
@@ -125,9 +91,10 @@ export function Team({team, toTasks, makeLeader, makeWorker, setAdmin, removeWor
             >
                 <Box
                     direction={"column"}
+                    gap={{top: "xxsmall"}}
                 >
                     <Heading level={2}>
-                        {team.name} # {team.id}
+                        {task.stage} Task: {task.name} # {task.id}
                     </Heading>
                     {errorMessage !== undefined &&
                     <Box
@@ -149,25 +116,93 @@ export function Team({team, toTasks, makeLeader, makeWorker, setAdmin, removeWor
                     gap={"small"}
                 >
                     {(status === 'admin' || status === 'leader') &&
+                    task.stage !== 'CLOSED' &&
                     <AppBtn
                         type={"focus"}
-                        action={toTasks}
-                        name={"Tasks"}
+                        name={"Select"}
+                        action={finish}
                     />
                     }
                     {(status === 'admin' || status === 'leader') &&
-                    <InviteWorkerContainer/>
+                    task.stage !== 'CLOSED' &&
+                    <EditTaskContainer task={task}/>
                     }
-                    {team.admin === username &&
-                    <EditTeamContainer/>
-                    }
-                    {team.admin === username &&
+                    {(status === 'admin' || status === 'leader') &&
+                    task.stage !== 'CLOSED' &&
                     <AppBtn
-                        action={removeTeam}
-                        type={"remove"}
-                        name={"Remove"}
+                        type={"update"}
+                        name={"Finish"}
+                        action={finish}
                     />
                     }
+                    {(status === 'admin' || status === 'leader') &&
+                    task.stage === 'COMPLETE' &&
+                    <AppBtn
+                        type={"update"}
+                        name={"Resume"}
+                        action={resume}
+                    />
+                    }
+                    {(status === 'admin' || status === 'leader') &&
+                    task.stage === 'WORKING' && task.workerId === username &&
+                    <AppBtn
+                        type={"update"}
+                        name={"Complete"}
+                        action={complete}
+                    />
+                    }
+                    {(status === 'admin' || status === 'leader') &&
+                    <AppBtn
+                        type={"remove"}
+                        name={"Remove"}
+                        action={remove}
+                    />
+                    }
+                </Box>
+            </Box>
+            <Box
+                overflow={"auto"}
+            >
+                <Box
+                    direction={"column"}
+                >
+                    <Box align={"right"} pad={{left: "small"}}>
+                        <Text>
+                            Description
+                        </Text>
+                    </Box>
+                </Box>
+                <Box
+                    border
+                    round
+                    width={"fill"}
+                    pad={{left: "small", bottom: "small", right: "xsmall"}}
+                >
+                    <Text
+                        size={"xxlarge"}>
+                        {task.description}
+                    </Text>
+                </Box>
+            </Box>
+            <Box
+                border={"top"}
+            >
+                <Box
+                    align={"center"}
+                    direction={"row"}
+                    justify={"between"}
+                    pad={{top: "small", left: "xlarge", right: "xlarge"}}
+                >
+                    <Text
+                        color={"green"}
+                        size={"xxlarge"}>
+                        Time work: {stats.timeWork}
+                    </Text>
+                    <Text
+                        color={"orange"}
+                        size={"xxlarge"}>
+                        Time paused: {stats.timePause}
+                    </Text>
                 </Box>
             </Box>
             <Box
@@ -187,65 +222,71 @@ export function Team({team, toTasks, makeLeader, makeWorker, setAdmin, removeWor
                         <TableHeader>
                             <TableRow>
                                 <TableCell scope="col" border="bottom">
-                                    Name worker
+                                    Name
                                 </TableCell>
                                 <TableCell scope="col" border="bottom">
-                                    Number of tasks
+                                    Email
                                 </TableCell>
                                 <TableCell scope="col" border="bottom">
-                                    Role
+                                    Time work
                                 </TableCell>
-                                {status === 'admin' &&
-                                <TableCell scope="col" border="bottom" align={"center"}>
+                                <TableCell scope="col" border="bottom">
+                                    Time pause
+                                </TableCell>
+                                <TableCell scope="col" border="bottom" align={"right"} margin={{right: "large"}}>
                                     Actions
                                 </TableCell>
-                                }
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {
                                 workers.map((worker, i) => {
-                                    const status = getStatus(team, worker.username)
+                                    const stats = getStats(worker, calls)
+                                    const name = worker.name + " " + worker.family_name
                                     return (
-                                        <TableRow key={worker.username}>
-                                            <TableCell>{`${worker.name} ${worker.family_name}`}</TableCell>
-                                            <TableCell>{getCount(team.tasks, worker.username)}</TableCell>
-                                            <TableCell>{status}</TableCell>
-                                            {team.admin === username &&
-                                            <TableCell align={"center"}>
-                                                {worker.username !== username &&
-                                                <AppDropBtn
-                                                    label={"Actions"}
-                                                    type={"action"}
-                                                    innerContent={<Actions
-                                                        status={status}
-                                                        worker={worker}
-                                                        makeWorker={makeWorker}
-                                                        makeLeader={makeLeader}
-                                                        setAdmin={setAdmin}
-                                                        removeWorker={removeWorker}
-                                                    />}
+                                        <TableRow key={team.id}>
+                                            <TableCell>{name}</TableCell>
+                                            <TableCell>{worker.email}</TableCell>
+                                            <TableCell>{stats.timeWork}</TableCell>
+                                            <TableCell>{stats.timePause}</TableCell>
+                                            <TableCell align={"right"}>
+                                                <AppBtn
+                                                    name={"Details"}
+                                                    type={"details"}
+                                                    action={() => view(worker.username)}
                                                 />
-                                                }
-                                                {worker.username === username &&
-                                                <Text
-                                                    size={'large'}
-                                                >
-                                                    It's you
-                                                </Text>
-                                                }
                                             </TableCell>
-                                            }
                                         </TableRow>
                                     )
-                                })
-                            }
+                                })}
                         </TableBody>
                     </Table>
                 </Grid>
             </Box>
         </Box>
     )
+}
+
+function getStats(worker, calls) {
+    calls = calls.filter((c) => {
+        return c.workerId === worker.username
+    })
+
+    let statistic = {
+        timeWork: 0,
+        timePause: 0
+    }
+
+    for (let i = 0; i < calls.length; i++) {
+        let call = calls[i]
+        if (call.type === 'WORKING') {
+            statistic.timeWork += 10
+        } else {
+            statistic.timePause += 10
+        }
+    }
+
+    return statistic;
 }
 
 function getStatus(team, username) {
@@ -258,51 +299,4 @@ function getStatus(team, username) {
     }
 
     return 'worker'
-}
-
-function getCount(tasks, username) {
-    let count = 0
-    for (let i = 0; i < tasks.length; i++) {
-        let task = tasks[i]
-        if (task.workerId === username)
-            count += 1
-    }
-
-    return count
-}
-
-function Actions({status, worker, makeLeader, makeWorker, setAdmin, removeWorker}) {
-    return (
-        <Box
-            pad="small"
-            direction={"column"}
-            gap="small"
-            round={"small"}
-        >
-            {status === 'leader' &&
-            <AppBtn
-                name={"Make worker"}
-                action={() => makeWorker(worker.username)}
-                type={"update"}
-            />
-            }
-            {status === 'worker' &&
-            <AppBtn
-                name={"Make leader"}
-                action={() => makeLeader(worker.username)}
-                type={"update"}
-            />
-            }
-            <AppBtn
-                name={"Set admin"}
-                action={() => setAdmin(worker.username)}
-                type={"update"}
-            />
-            <AppBtn
-                name={"Remove"}
-                action={() => removeWorker(worker.username)}
-                type={"remove"}
-            />
-        </Box>
-    )
 }

@@ -32,7 +32,7 @@ export function loadWorkerTasksFromServ(workerId) {
     return async (dispatch, getState) => {
         try {
             const response = await tasksOfWorker(workerId, cookies.get('accessToken'))
-            dispatch(setTasksAC(response.tasks))
+            dispatch(setTasksAC(response))
         } catch (err) {
             return Promise.reject(err)
         }

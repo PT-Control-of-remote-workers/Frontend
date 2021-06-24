@@ -1,44 +1,45 @@
 import {connect} from "react-redux";
 import React, {useState} from "react";
-import {TrelloIntegration} from "./TrelloIntegration";
-import {loadTasksFromTrello} from "../../../../../../redux/reducers/tasks_reduce";
-import {selectTeam} from "../../../../../../redux/selectors/selectors";
+import {EditTask} from "./EditTask";
+import {updateStatisticsTask} from "../../../../../../redux/reducers/task_calls_reduce";
 
-function TrelloIntegrationContainer({team, loadTrello}) {
-    const primaryValue = {
-        nameList: '',
-        token: '',
-        board: '',
-        teamID: team.id
-    }
-
-    const [value, setValue] = useState(primaryValue)
+function EditTaskContainer({task, updateTask}) {
+    const [value, setValue] = useState(task)
     const [errorMessage, setErrorMessage] = useState(undefined)
 
     const [open, setOpen] = useState(false);
 
     const onOpen = () => {
+        setValue(task)
         setOpen(true);
     }
 
-    const onClose = () => setOpen(undefined);
+    const onClose = () => {
+        setValue(undefined)
+        setOpen(undefined);
+    }
 
     function onSubmit() {
         try {
             Promise.all([
-                loadTrello(value)
+                updateTask({
+                    ...value,
+                    id: task.id
+                })
             ])
                 .then(onClose)
                 .catch(err => {
                     setErrorMessage(err.message)
                 })
 
+
         } catch (err) {
             setErrorMessage(err.message)
         }
     }
+
     return (
-        <TrelloIntegration
+        <EditTask
             onSubmit={onSubmit}
             setValue={setValue}
             value={value}
@@ -52,9 +53,8 @@ function TrelloIntegrationContainer({team, loadTrello}) {
 }
 
 const mapStateToProps = (state) => ({
-    team: selectTeam(state)
 })
 
 export default connect(mapStateToProps, {
-    loadTrello: loadTasksFromTrello
-})(TrelloIntegrationContainer)
+    updateTask: updateStatisticsTask
+})(EditTaskContainer)

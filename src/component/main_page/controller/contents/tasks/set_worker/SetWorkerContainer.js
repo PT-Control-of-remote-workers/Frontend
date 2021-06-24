@@ -2,7 +2,7 @@ import {SetWorker} from "./SetWorker";
 import {connect} from "react-redux";
 import React, {useState} from "react";
 import {selectTeam} from "../../../../../../redux/selectors/selectors";
-import {setWorkerOnTask} from "../../../../../../redux/reducers/task_reduce";
+import {setWorkerOnTask} from "../../../../../../redux/reducers/tasks_reduce";
 
 function SetWorkerContainer({task, team, setWorkerOnTask}) {
     const [worker, setWorker] = useState(undefined)

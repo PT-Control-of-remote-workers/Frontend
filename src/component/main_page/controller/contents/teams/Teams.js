@@ -13,10 +13,17 @@ export default function Teams({username, allTeams, choose, leave, remove}) {
     }
 
     const sortOnAdmin = (t1, t2) => {
+        let status
         if (t1.admin === username) {
-            return 1
+            status = 1
         } else {
-            return -1
+            status = -1
+        }
+
+        if (t2.admin === username) {
+            return  1 - status
+        } else {
+            return -1 - status
         }
     }
 

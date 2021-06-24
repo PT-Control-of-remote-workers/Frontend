@@ -19,15 +19,31 @@ export function selectTeamCalls(state) {
 }
 
 export function selectTeamStatistics(state) {
-    return state.teamCalls.teamCalls.statistics
+    return state.teamCalls.statistics
 }
 
 export function selectTaskCalls(state) {
-    return state.taskCalls.teamCalls.calls
+    return state.taskCalls.calls
 }
 
 export function selectTaskStatistic(state) {
-    return state.taskCalls.teamCalls.statistic
+    return state.taskCalls.statistic
+}
+
+export function selectTaskFromStatistic(state) {
+    return state.taskCalls.task
+}
+
+export function selectTeamFromStatistic(state) {
+    return state.taskCalls.team
+}
+
+export function selectWorkersFromStatistic(state) {
+    return state.taskCalls.workers
+}
+
+export function selectWorkerTaskCalls(state) {
+    return state.workerTaskCalls.calls
 }
 
 export function selectUserData(state) {

@@ -35,7 +35,6 @@ export default function PreviewTeams({username, allTeams}) {
 
         return (
             <Box
-                height={"80%"}
                 width={"90%"}
                 round={"medium"}
                 background={"white"}

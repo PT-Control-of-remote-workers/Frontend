@@ -1,7 +1,7 @@
 import {connect} from "react-redux";
 import React, {useState} from "react";
 import {CreateTask} from "./CreateTask";
-import {createTaskOnServ} from "../../../../../../redux/reducers/task_reduce";
+import {createTaskOnServ} from "../../../../../../redux/reducers/tasks_reduce";
 import {selectSimpleTeam} from "../../../../../../redux/selectors/selectors";
 
 function CreateTaskContainer({team, createTask}) {

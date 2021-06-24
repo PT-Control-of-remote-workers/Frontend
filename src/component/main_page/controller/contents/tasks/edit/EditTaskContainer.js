@@ -1,7 +1,7 @@
 import {connect} from "react-redux";
 import React, {useState} from "react";
 import {EditTask} from "./EditTask";
-import {updateTaskOnServ} from "../../../../../../redux/reducers/task_reduce";
+import {updateTaskOnServ} from "../../../../../../redux/reducers/tasks_reduce";
 
 function EditTaskContainer({task, updateTask}) {
     const primaryValue = {

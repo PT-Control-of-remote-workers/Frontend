@@ -12,6 +12,8 @@ import {
 } from "react-router-dom";
 import TeamContainer from "./team/TeamContainer";
 import TasksContainer from "./tasks/TasksContainer";
+import TaskContainer from "./task/TaskContainer";
+import DetailsConteiner from "./details/DetailsConteiner";
 
 export function Contents() {
     return (
@@ -34,6 +36,18 @@ function SwitchContent() {
     let match = useRouteMatch();
     return (
         <Switch>
+            <Route
+                path={`${match.path}/tasks/:taskId/workers/:workerId`}
+                exact={true}
+            >
+                <DetailsConteiner/>
+            </Route>
+            <Route
+                path={`${match.path}/tasks/:taskId`}
+                exact={true}
+            >
+                <TaskContainer/>
+            </Route>
             <Route
                 path={`${match.path}/teams/:teamId/tasks`}
                 exact={true}

@@ -1,5 +1,5 @@
 import {connect} from "react-redux";
-import {selectSimpleTeam, selectTasksOfTeam, selectTeam} from "../../../../../redux/selectors/selectors";
+import {selectTasksOfTeam, selectTeam} from "../../../../../redux/selectors/selectors";
 import React, {useEffect, useState} from "react";
 import {useHistory, useRouteMatch} from "react-router-dom";
 import {
@@ -7,7 +7,7 @@ import {
     loadTasksFromServ,
     removeTaskFromServ,
     TASK_STAGES
-} from "../../../../../redux/reducers/task_reduce";
+} from "../../../../../redux/reducers/tasks_reduce";
 import {loadWorkersFromServ} from "../../../../../redux/reducers/workers_reduce";
 import {Tasks} from "./Tasks";
 
@@ -16,7 +16,7 @@ function TasksContainer({team, tasks, loadTeam, loadTasks, changeStateTask, remo
     let match = useRouteMatch();
     const teamId = match.params.teamId;
 
-    const [hasData, setData] = useState(Boolean(team && tasks))
+    const [hasData, setData] = useState(false)
     const [errorMessage, setErrorMessage] = useState(undefined)
 
     const history = useHistory()
@@ -24,22 +24,13 @@ function TasksContainer({team, tasks, loadTeam, loadTasks, changeStateTask, remo
     useEffect(() => {
         if (!hasData) {
             setErrorMessage(undefined)
-            if (team == null) {
-                Promise.all([
-                    loadTeam(teamId)
-                ])
-                    .catch(err => {
-                        setErrorMessage(err.message)
-                    })
-            }
-            if (tasks == null) {
-                Promise.all([
-                    loadTasks(teamId)
-                ])
-                    .catch(err => {
-                        setErrorMessage(err.message)
-                    })
-            }
+            Promise.all([
+                loadTeam(teamId),
+                loadTasks(teamId)
+            ])
+                .catch(err => {
+                    setErrorMessage(err.message)
+                })
             setData(true)
         }
     })

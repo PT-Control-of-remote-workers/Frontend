@@ -9,10 +9,10 @@ import {
 } from "../../../../../redux/reducers/teams_reducer";
 import {getUsernameFromCookie} from "../../../../../utils/cookiesUtils";
 import Teams from "./Teams";
-import {setSimpleTeamAC} from "../../../../../redux/reducers/workers_reduce";
+import {clearTeamAC, setSimpleTeamAC} from "../../../../../redux/reducers/workers_reduce";
 import {useHistory} from "react-router-dom";
 
-function TeamsContainer({teams, loadTeams, removeWorker, removeTeam, chooseTeam}) {
+function TeamsContainer({teams, loadTeams, removeWorker, removeTeam, chooseTeam, clearTeamAC}) {
     const username = getUsernameFromCookie()
     const [hasData, setData] = useState(false)
 
@@ -35,7 +35,8 @@ function TeamsContainer({teams, loadTeams, removeWorker, removeTeam, chooseTeam}
     }
 
     async function choose(team) {
-        chooseTeam(team)
+        await clearTeamAC()
+        await chooseTeam(team)
     }
 
     return (
@@ -66,6 +67,7 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
+    clearTeamAC,
     loadTeams: loadTeamsFromServ,
     removeWorker: removeWorkerFromTeam,
     removeTeam: removeTeamFromServ,

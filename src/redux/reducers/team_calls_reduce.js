@@ -64,7 +64,8 @@ export function getStatisticOfTask(calls, distance) {
         timePause: 0
     }
 
-    for (const call in calls) {
+    for (let i = 0; i < calls.length; i++) {
+        let call = calls[i]
         if (call.type === 'WORKING') {
             statistic.timeWork += distance
         } else {

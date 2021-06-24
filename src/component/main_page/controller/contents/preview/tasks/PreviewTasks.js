@@ -31,6 +31,7 @@ export default function PreviewTasks({allTasks}) {
                 background={"white"}
                 pad={"medium"}
                 gap={"medium"}
+                overflow={"scroll"}
             >
                 <Heading level={2}>
                     Preview tasks

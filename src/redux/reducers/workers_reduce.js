@@ -104,7 +104,7 @@ export function workersReducer(state = defaultState, action) {
             })
         }
         case (CLEAR): {
-            const newState = {...state}
+            const newState = {}
             newState.simpleTeam = null
             newState.team = null
             return {
