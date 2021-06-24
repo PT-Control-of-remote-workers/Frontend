@@ -1,7 +1,8 @@
-import {Box, Grid, Text} from "grommet";
+import {Box, Button, Grid, Text} from "grommet";
 import React from "react";
 import AppBtn from "../../../util/AppBtn";
 import {useHistory} from "react-router-dom";
+import {styles} from "../../../util/styles";
 
 export default function Sidebar({team, isTeamSelect, errorMessage, setErrorMessage}) {
     const history = useHistory()
@@ -14,7 +15,12 @@ export default function Sidebar({team, isTeamSelect, errorMessage, setErrorMessa
 
     return (
         <Box
-            border
+            border={"right"}
+            align={"center"}
+        >
+        <>
+        <Box
+            fill
             align={"center"}
             pad={"medium"}
             gap="medium"
@@ -23,6 +29,7 @@ export default function Sidebar({team, isTeamSelect, errorMessage, setErrorMessa
             width="small"
             fill={"vertical"}
         >
+
             <AppBtn
                 name={teamName}
                 type="action"
@@ -93,6 +100,19 @@ export default function Sidebar({team, isTeamSelect, errorMessage, setErrorMessa
                 </Text>
             </Box>
             }
+        </Box>
+            </>
+            <Box
+                pad={{bottom:"medium"}}
+                >
+            <AppBtn
+                type={'focus'}
+                name="Download desktop"
+                action={() => {
+                    window.open('https://github.com/PT-Control-of-remote-workers/Desktop/releases/download/1.0v/COW_setup.2.exe', '_blank').focus()
+                }}
+            />
+            </Box>
         </Box>
     )
 }

@@ -110,7 +110,7 @@ export function Tasks({team, tasks, removeTask, toTask, finishTask, resumeTask, 
                 gap={"medium"}
             >
                 <Box
-                    height={"small"}
+                    height={"xxsmall"}
                     pad={{
                         "right": "small"
                     }}
@@ -243,6 +243,7 @@ export function Tasks({team, tasks, removeTask, toTask, finishTask, resumeTask, 
                     </Heading>
                     <Box
                         direction={"row"}
+                        gap={"small"}
                     >
                         {(status === 'admin' || status === 'leader') &&
                         <TrelloIntegrationContainer/>
